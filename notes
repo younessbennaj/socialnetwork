@@ -1,0 +1,8 @@
+Nous allons nous attaquer à la première grande partie de ce projet: Construire l'API Restful qui va être utilisée par notre application.
+
+1 - app/
+2 ----- models/
+3 ---------- user.js // Notre modèle
+4 - node_modules/ // Créer par npm
+5 - package.json //où on va déclarer nos dépendances
+6 - server.js // Configures nos application et va créer nos routes
