@@ -9,9 +9,15 @@ var mongoose = require('mongoose');
 //On défini le port d'écoute
 var morgan = require('morgan');
 //Morgan va nous permettre de logger toutes les requêtes dans la console afin de comprendre ce qu'il se passe
+var jwt = require('jsonwebtoken');
+//On va faire appel au module jsonwebtoken
 var port = process.env.PORT || 8000;
 //On défini notre app en utilisant express
 var app = express();
+
+var mySecret = 'itrytobuildasocialnetwork';
+/* Cette variable est ce que l'on appel le secret dans le procesus du webtokens. C'est la signature que va detenir le serveur pour savoir si ce
+webtokens a bien été émis par lui et il va utiliser cette variable à chaque fois qu'il va générer un nouveau jeton. */
 
 //Configuration de notre midleware body-parser
 //On va préciser que nous utilisons body-parser grâce à la méthode use en précisant que nous utlisons les méthodes urlencoded et json sur notre body-parser
@@ -57,6 +63,66 @@ app.get('/', function(req, res) {
 /*l'objet Router() comporte toutes les méthodes d'un objet de type express, dans notre cas nous allons utiliser principalement sa méthode Route()
 qui va nous permettre de gérer les requêtes qui nous sont faites.*/
 var apiRouter = express.Router();
+
+// Route pour authentifier un utilisisateur  (Méthode POST sur l'URL http://localhost:8000/api/authenticate)
+
+apiRouter.post('/authenticate', function(req, res) {
+
+  //On va récupérer notre utilisateur
+  //Nous allons utiliser notre Model 'User' qui est un accès direct à la collection 'users'
+  //Pour récupérer notre utilisateur nous avons le choix entre find, findOne et findById.
+  //En résumer: Pour chaque utilisateur dont l'userName match avec celui de la requête, on va selectionner les champs firstName, lastName, userName et password
+  /*Comme nous n'avons pas passer de callback à la méthode findOne() il faudra appeler la méthode exec() de l'objet Query que nous retourne la methode
+  findOne() afin de l'exececuter et de récupérer les résultats.*/
+
+  var query = User.findOne({userName: req.body.userName});
+
+  query.select('firstName lastName userName password');
+
+  query.exec(function(err, user) {
+    if(err) {
+      res.send(err);
+    }
+    else {
+      //Aucun utilisateur ne correspond à celui fournis dans la requête
+      if(!user) {
+        res.json({
+          sucess: false,
+          message: 'authentification impossible. Cet utilisateur n\'existe pas'
+        });
+      } //fin de if(!user)
+      else {
+        //On va gérer le cas où l'utilisateur existe mais que le mot de passe n'est pas le bon
+        if(user.password !== req.body.password) {
+          res.json({
+            success: false,
+            message: 'Authentification impossible. Le mot de passe n\'est pas correct !'
+          });
+        }
+        else {
+
+          //Si l'utilisateur existe et que le mot de passe est le bon on va donc créer un jeton pour notre utilisateur
+
+          var token = jwt.sign({
+                userName: user.userName,
+                firstName: user.firstName,
+                lastName: user.lastName
+              }, mySecret, {
+                expiresIn: '24' //Expire sous 24 heures
+              });
+
+          res.json({
+            success: true,
+            message: 'l\'authentification est un succes !',
+            token: token
+          });
+
+        }//Fin du else
+
+      }
+    }
+  });
+}); //Fin de la méthode POST sur la route /authenticate
 
 apiRouter.use('/', function(req, res, next) {
   console.log(req.method, req.url);

@@ -6,3 +6,14 @@ Nous allons nous attaquer à la première grande partie de ce projet: Construire
 4 - node_modules/ // Créer par npm
 5 - package.json //où on va déclarer nos dépendances
 6 - server.js // Configures nos application et va créer nos routes
+
+Web tokens : les clés d'authentification API peuvent donc servir à limiter le contrôle ou à protéger les mots de passe de l'utilisateur.
+Le but principal lorsque l'on utilise des tokens c'est que l'on a besoin de s'authentifier que la première fois avec notre username et notre
+password, ensuite pour chaque requêtes que nous ferons nous aurons seulement besoin de ce tokens. Le serveur n'a pas besoin de créer une session
+et stocker les informations de l'utilisateurs.
+L'autre intérêt d'utilisation des tokens est la creation de permition différentes, par exemple certains utilisateurs auront accès à nos données mais
+n'auront accès qu'au informations que l'on aura défini.
+
+/*/Nous allons créer une nouvelle route dans notre API. Accessible via la methode POST sur l'URL http://localhost:8000/api/authenticate. Cet
+a cet endroit que notre utilisateur va pouvoir envoyer via une méthode POST son nom d'utilisateur ainsi que son mot de passe et en échange il va
+recevoir un jeton lui permettant d'accéder aux informations de notre API./*/
