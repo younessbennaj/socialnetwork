@@ -64,6 +64,20 @@ app.get('/', function(req, res) {
 qui va nous permettre de gérer les requêtes qui nous sont faites.*/
 var apiRouter = express.Router();
 
+/*/Authenticate/*/
+
+/*jsonwebtoken ? C'est un moyen de transmettre de façon sécurisé des informations entre deux parties sous la forme d'un objet JSON. Il peut être utilisé dans deux cas:
+L'authentification ou l'échange d'information. Dans notre cas (et c'est le cas le plus souvent) il est utilisé pour l'authentification. C'est à dire
+qu'une fois que l'utilisateur est logger, chaque requête transmise au serveur contiendra ce jsonwebtoken, permettant ainsi à l'utilisateur l'accès
+aux routes, services et ressources dont l'accès est permis seulement par ce token (jeton). La structure d'un jsonwebtoken est composé de 3 parties séparé
+par un point (aaaaaa.bbbbbb.cccccc): Header, payload et signature. Le header est composé du type de token et de l'algorithme de hashage utilisé. Le
+Payload contient les informations à propos d'une entité (dans notre cas l'utilisateur) et des metadata addiditionnelle (par exemple le temps au bout
+du quel le jeton expire). La signature est ce qui va permettre de sécurisé notre jsonwebtoken, c'est un procesus que va prendre en charge notre package
+jwt et qui va utiliser l'encodage de notre header et de notre payload ainsi la variable secrete que nous avons définis. Le resultat de tout ça est
+une chaine de caractère encoder en base64 (utilisant 64 caractères).
+ex: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImNocmlzbWFydGluIiwiZmlyc3ROYW1lIjoiQ2hyaXMiLCJsYXN0TmFtZSI6Ik1hcnRpbiIsImlhdCI6MTQ4NTI1MjQyNywiZ
+XhwIjoxNDg1MjUyNDI3fQ.hNaYjpwShI5rrVMiHjf3pP0utV014weyKmepprYaLPY'*/
+
 // Route pour authentifier un utilisisateur  (Méthode POST sur l'URL http://localhost:8000/api/authenticate)
 
 apiRouter.post('/authenticate', function(req, res) {
@@ -103,13 +117,16 @@ apiRouter.post('/authenticate', function(req, res) {
 
           //Si l'utilisateur existe et que le mot de passe est le bon on va donc créer un jeton pour notre utilisateur
 
+          /*On va utiliser pour cela le jsonwebtoken package pour signer ce jeton. Ce package va générer automatiquement le header et la signature
+          de notre jsonwebtoken après qu'on lui ai passé en argument notre payload qui est dans notre cas notre utilisateur.*/
+
           var token = jwt.sign({
                 userName: user.userName,
                 firstName: user.firstName,
                 lastName: user.lastName
-              }, mySecret, {
-                expiresIn: '24' //Expire sous 24 heures
-              });
+              }, mySecret,
+                { expiresIn: '24h' } //Expire au bout de 24h, une nouvelle authentification sera nécessaire 
+              );
 
           res.json({
             success: true,
@@ -124,10 +141,61 @@ apiRouter.post('/authenticate', function(req, res) {
   });
 }); //Fin de la méthode POST sur la route /authenticate
 
-apiRouter.use('/', function(req, res, next) {
-  console.log(req.method, req.url);
+/*/Le middleware qui protège nos routes authentifiées/*/
 
-  next();
+/* Maintenant que nous avons fournis un token à notre utilisateur il va pouvoir être stocké coté client (probablement au mooyen d'un cookie). Ce jeton va
+nous être envoyé à chaque requête uù l'utilisateur voudra récupérer des informations. Lorsqu'un client possède un token il va pouvoir alors identifer
+l'utilisateur. Le token peut être envoyer dans un cookie ou dans un header http. Peu importe le moyen avec lequel il va être envoyer, le token reste
+cette même chaine de caractère compactée que l'on a envoyer au client. Pour vérifier si ce token est correcte on va utiliser la methode verify() de
+l'objet jwt avec en argument notre token et la variable secrete. Si le token est valide, cette méthode va retourner un json qui contient les informations
+que l'on a plancé de le jsonwebtoken. Si il n'est pas valide cette méthode va retrouner une erreure qui décrit ce problème. On va utiliser notre
+route middleware pour protéger notre route API, c'est à dire que nous allons vérifier le token pour chaque requête sur nos routes authentifiées. Nous
+allons permettre à notre utilisateur de fournir le token via les paramètres POST, les paramètres de l'URL ou via un header HTTP. */
+
+//Déclaration du middleware qui va vérifier notre token
+
+apiRouter.use('/', function(req, res, next) {
+
+  //On va récupérer notre token selon l'une des 3 manières dont l'utilisateur peut nous le passer
+  var token = req.body.token || req.query.token || req.headers['x-access-token'];
+
+  //Si on récupère un token
+  if(token) {
+
+    //On va utiliser la méthode verify() pour vérifier si ce token est valide
+    /* La fonction de callback va nous permettre de récupérer le payload de notre token une fois qu'il est décodé si la signature passé en argument
+    est valide. Sinon il retourne une erreur.*/
+    jwt.verify(token, mySecret, function(err, decoded) {
+      if(err) {
+        //On va envoyer une réponse http avec le code 403 (accès refusé) et un message d'erreur
+        return res.status(403).send({
+          success: false,
+          message: 'Echec à authentifier le token'
+        });
+      } //Fin de if(err)
+      else {
+        //Si la signature passé en argument est correcte on va pouvoir aller à la prochaine route
+        //On va stocker notre payload (les informations) décoder dans la requête pour être utiliser dans les prochaines routes
+
+        req.decoded = decoded;
+
+        //L'utilisateur peut aller plus loin seulement si il fournis un token et que celui ci est vérifié
+        next();
+
+      } //Fin du else
+
+    }); //Fin de la méthode verify()
+  } // Fin de if(token)
+  else {
+    //S'il n'y a pas de token envoyer par l'utilisateur
+    //On va envoyer une réponse http avec le code 403 (accès refusé) et un message d'erreur
+    return res.status(403).send({
+      success: false,
+      message: 'Aucun token fournis.'
+    });
+  }//Fin du else
+
+//Nous avons donc construit notre middleware qui va protéger l'accés aux routes qui suivent et qui sont accéssible seulement si on est identifié
 });
 
 apiRouter.get('/', function(req, res){ //Le middleware est moyen de faire quelque chose avant que la requête ne soit traité
