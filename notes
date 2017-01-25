@@ -32,11 +32,15 @@ une chaine de caractère encoder en base64 (utilisant 64 caractères).
 ex: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImNocmlzbWFydGluIiwiZmlyc3ROYW1lIjoiQ2hyaXMiLCJsYXN0TmFtZSI6Ik1hcnRpbiIsImlhdCI6MTQ4NTI1MjQyNywiZ
 XhwIjoxNDg1MjUyNDI3fQ.hNaYjpwShI5rrVMiHjf3pP0utV014weyKmepprYaLPY'*/
 
-Maintenant que nous avons fournis un token à notre utilisateur il va pouvoir être stocké coté client (probablement au mooyen d'un cookie). Ce jeton va
+/* Maintenant que nous avons fournis un token à notre utilisateur il va pouvoir être stocké coté client (probablement au mooyen d'un cookie). Ce jeton va
 nous être envoyé à chaque requête uù l'utilisateur voudra récupérer des informations. Lorsqu'un client possède un token il va pouvoir alors identifer
 l'utilisateur. Le token peut être envoyer dans un cookie ou dans un header http. Peu importe le moyen avec lequel il va être envoyer, le token reste
 cette même chaine de caractère compactée que l'on a envoyer au client. Pour vérifier si ce token est correcte on va utiliser la methode verify() de
 l'objet jwt avec en argument notre token et la variable secrete. Si le token est valide, cette méthode va retourner un json qui contient les informations
 que l'on a plancé de le jsonwebtoken. Si il n'est pas valide cette méthode va retrouner une erreure qui décrit ce problème. On va utiliser notre
 route middleware pour protéger notre route API, c'est à dire que nous allons vérifier le token pour chaque requête sur nos routes authentifiées. Nous
-allons permettre à notre utilisateur de fournir le token via les paramètres POST, les paramètres de l'URL ou via un header HTTP.
+allons permettre à notre utilisateur de fournir le token via les paramètres POST, les paramètres de l'URL ou via un header HTTP. */
+
+Edit Structure Fichier: Dans le but d'avoir une strucutre pour notre app beaucoup plus modulaire nous permettant d'ajouter ou de supprimer des éléments
+plus facilement, nous avons adopter une nouvelle structure pour notre app. Cette nouvelle structure est inspiré des recommandation faites
+pour construire une application MEAN stack de façon à être modulable et scalable.
