@@ -53,6 +53,7 @@ mongoose.connect(config.database);
 
 // Routes pour notre API //
 
+//On va faire appel au module qui contient nos routes dans le fichier app/routes/api.js
 var apiRoutes = require('./app/routes/api')(app, express);
 
 //On va préfixer toutes nos routes liées à l'API par /api
