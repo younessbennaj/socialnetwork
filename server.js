@@ -49,6 +49,8 @@ d'une API). On permet donc à n'importe quel domaine d'accéder à notre API. */
 //On demande à mongoose de se connecter à notre base de données MongoDB
 mongoose.connect(config.database);
 
+app.use(express.static(__dirname + '/public')); 
+
 //Les routes//
 
 // Routes pour notre API //

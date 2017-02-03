@@ -3,8 +3,73 @@
   <head>
     <meta charset="utf-8">
     <title>Social Network</title>
+
+    <!-- L'élément <base> définit l'URL de base à utiliser pour recomposer toutes les URL relatives contenues dans un document. -->
+    <base href="/">
+
+    <!-- CSS -->
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <!-- Notre CSS personnalisé -->
+    <link rel="stylesheet" href="assets/css/style.css">
+
   </head>
-  <body>
-    <h1>Social Network</h1>
+
+
+  <body ng-app="socialApp" ng-controller="mainController as main">
+
+
+    <!-- NAVBAR -->
+
+    <nav class="navbar" ng-if="main.loggedIn">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/"><span class="glyphicon glyphicon-send"></span> Social Network</a>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+          <li ng-if="main.loggedIn"><a href="/users">{{ main.user.name }}</a></li>
+          <li class="active"><a href="#">Acceuil</a></li>
+          <li ng-if="!main.loggedIn"><a href="/login">Connexion</a></li>
+          <li ng-if="!main.loggedIn"><a href="#" ng-click="main.doLogout()">Déconnexion</a></li>
+        </ul>
+        <form class="navbar-form navbar-right">
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Search">
+          </div>
+          <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+      </div>
+    </nav>
+
+
+    <main>
+      <!-- VIEW -->
+      <div ng-view></div>
+    </main>
+
+    <!-- JavaScript -->
+
+    <!-- Angular -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <!-- Angular Route -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-route.js"></script>
+    <!-- Angular Animate -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-animate.js"></script>
+
+    <!-- Controllers -->
+    <script src="app/controllers/mainCtrl.js"></script>
+    <script src="app/controllers/userCtrl.js"></script>
+
+    <!-- Services -->
+    <script src="app/services/authenticateService.js"></script>
+    <script src="app/services/userService.js"></script>
+
+    <!-- Fichier principal de notre Application Angular -->
+    <script src="app/app.routes.js"></script>
+    <script src="app/app.js"></script>
+
   </body>
 </html>

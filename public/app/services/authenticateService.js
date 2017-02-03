@@ -81,7 +81,12 @@ angular.module('authenticateService', [])
       //Si un utilisteur est loggé
       if(AuthenticateToken.getToken()) {
         //On va faire une méthode get sur l'endpoint api/me de notre API
-        return $http.get('api/me');
+        /*Sur chaque changement de route on va récupérer les données de l'utilidateur. On ne veut pas faire un appel à l'API à chaque fois si
+        cela n'est pas necessaire car cela consomme beaucoup de ressources et va avoir un impact sur la rapidité et l'efficacité de notre application.
+        Il y'a donc un moyen de mettre ces informations en cache gràce grâce aux paramètre de configuration de la méthode get() du service $http.
+        Donc lorsqu'un appel à la methode getUser() de notre service Authenticate va être fait, notre programme va vérifier si ces informations ne
+        sont pas déjà en cache.*/
+        return $http.get('api/me', { cache: true });
       }
       else {
         return $q.reject({message: 'l\'utilisateur n\'a pas de token'});
@@ -168,7 +173,7 @@ angular.module('authenticateService', [])
         config.headers['x-access-token'] = token;
 
         return config;
-        
+
       }
 
     };
