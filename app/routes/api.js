@@ -22,33 +22,33 @@ module.exports = function(app, express) {
   qui va nous permettre de gérer les requêtes qui nous sont faites.*/
   var apiRouter = express.Router();
 
-  // //On va créer un user (methode POST sur l'URL http://localhost:8000/api/users)
-  // apiRouter.post('/users', function(req, res) {
-  //   //On va créer une nouvelle instance de notre model User
-  //   var user = new User();
-  //
-  //   //On va ensuite stocker les informations de l'utilisateurs provenant de la requête
-  //   user.firstName = req.body.firstName;
-  //   user.lastName = req.body.lastName;
-  //   user.userName = req.body.userName;
-  //   user.password = req.body.password;
-  //
-  //   //On va sauvegarder notre utilisateur et vérifier s'il y a des erreurs
-  //   user.save(function(err) {
-  //     if(err) {
-  //
-  //       if(err.code == 11000) { //Nous permet de vérifier si un utilisateur existe déjà
-  //         return res.json({ success: false, message: 'Un utilisateur avec ce nom d\'utilisateur existe déjà.'});
-  //       }
-  //       else {
-  //         return res.send(err);
-  //       }
-  //     }
-  //     else {
-  //       res.json({message: 'Utilisateur crée avec succès !'});
-  //     }
-  //   });
-  // }); //fin de la méthode post
+  //On va créer un user (methode POST sur l'URL http://localhost:8000/api/users)
+  apiRouter.post('/users', function(req, res) {
+    //On va créer une nouvelle instance de notre model User
+    var user = new User();
+
+    //On va ensuite stocker les informations de l'utilisateurs provenant de la requête
+    user.firstName = req.body.firstName;
+    user.lastName = req.body.lastName;
+    user.userName = req.body.userName;
+    user.password = req.body.password;
+
+    //On va sauvegarder notre utilisateur et vérifier s'il y a des erreurs
+    user.save(function(err) {
+      if(err) {
+
+        if(err.code == 11000) { //Nous permet de vérifier si un utilisateur existe déjà
+          return res.json({ success: false, message: 'Un utilisateur avec ce nom d\'utilisateur existe déjà.'});
+        }
+        else {
+          return res.send(err);
+        }
+      }
+      else {
+        res.json({message: 'Utilisateur crée avec succès !'});
+      }
+    });
+  }); //fin de la méthode post
 
   /*/Authenticate/*/
 
