@@ -5,4 +5,14 @@ angular.module('userCtrl', ['userService'])
   .controller('userController', function(User) {
 
     var vm = this;
+
+    User.all()
+      .then(function(data) {
+
+        console.log(data);
+
+        //On va stocké nos utilisateurs dans la variable vm.users
+        vm.users = data.data;
+
+      });
   });

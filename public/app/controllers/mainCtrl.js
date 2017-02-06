@@ -44,7 +44,8 @@ angular.module('mainCtrl', [])
 
         .then(function(data) {
 
-           vm.user = data;
+           vm.user = data.data;
+        
 
         });
 
@@ -65,15 +66,16 @@ angular.module('mainCtrl', [])
         .then(function(data) {
 
 
-          if(data.data.success) {
+          if(data.success) {
             //L'utilisateur est redirigé vers la page /users
             /*$location est un service Angular. Il va nous permettre d'agir sur l'URL de notre navigateur grâce à l'utilisateur de l'objet window.location
             de notre navigateur contenant les méthode nous permettant de modifier notre URL. On l'utilise donc lorsque l'on souhaite changer l'URL de
             notre navigateur. La méthode path() de ce service permet si il est appelé avec un paramètre de changer le chemin de notre URL. */
-             $location.path('/user');
+             $location.path('/users');
+             console.log(data);
           }
           else {
-            vm.error = data.data.message;
+            vm.error = data.message;
           }
 
 

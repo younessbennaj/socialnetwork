@@ -20,9 +20,16 @@ angular.module('app.routes', ['ngRoute'])
         templateUrl: 'app/views/pages/login.html',
         controller: 'mainController',
         controllerAs: 'login'
+      })
+
+      .when('/users', {
+        templateUrl: 'app/views/pages/users/all.html',
+        controller: 'userController',
+        controllerAs: 'user'
       });
 
     //On peut ajouter une dernière règle (otherwise()) qui permet de définir la règle par défaut si aucune règle n'a matché
 
     $locationProvider.html5Mode(true);
+
   });

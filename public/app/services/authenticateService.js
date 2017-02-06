@@ -45,9 +45,9 @@ angular.module('authenticateService', [])
       //Le premier argument contien la fonction si la promise est bien réalisé et nous fournis les données dont on a besoin (objet renvoyer par notre API)
         .then(function(data) {
           //Va nous permettre de stocker notre token coté Client grace au service AuthenticateToken
-          AuthenticateToken.setToken(data.token);
+          AuthenticateToken.setToken(data.data.token);
           //On va renvoyer les données de notre utilisateur
-          return data;
+          return data.data;
         })
     }; //fin de la fonction authenticateFactory.login();
 
@@ -183,6 +183,7 @@ angular.module('authenticateService', [])
 
       //On va récupérer notre token
       var token = AuthenticateToken.getToken();
+
 
       //Si le token existe on va alors l'attacher au header de notre requête en tant que valeur de "x-access-token"
       if(token) {
