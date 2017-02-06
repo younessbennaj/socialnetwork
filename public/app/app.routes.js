@@ -9,8 +9,17 @@ angular.module('app.routes', ['ngRoute'])
 
     $routeProvider
     //Chaque règle est composé de l'URL pour laquelle la règle va s'appliquer et d'un JSON qui contient le template à charger ainsi que le controller associé
+
+      //La route pour notre home page
       .when('/', {
         templateUrl: 'app/views/pages/home.html'
+      })
+
+      //La route pour la page login
+      .when('/login', {
+        templateUrl: 'app/views/pages/login.html',
+        controller: 'mainController',
+        controllerAs: 'login'
       });
 
     //On peut ajouter une dernière règle (otherwise()) qui permet de définir la règle par défaut si aucune règle n'a matché

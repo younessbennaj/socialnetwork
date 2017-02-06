@@ -59,7 +59,7 @@ module.exports = function(app, express) {
         //Aucun utilisateur ne correspond à celui fournis dans la requête
         if(!user) {
           res.json({
-            sucess: false,
+            success: false,
             message: 'authentification impossible. Cet utilisateur n\'existe pas'
           });
         } //fin de if(!user)

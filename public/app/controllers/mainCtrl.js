@@ -57,16 +57,26 @@ angular.module('mainCtrl', [])
     grâce au service $location.*/
     vm.doLogin = function() {
 
+      vm.error = '';
+
       /*Cette fonction va nous permettre de logger un utilisateur, c'est à dire lui permettre de récupérer le token nécessaire pour pourvoir
       'emprunter' les routes protégées de notre API. On passe en argument le userName et le password fournis par l'utilisateur*/
       Authenticate.login(vm.loginData.username, vm.loginData.password)
         .then(function(data) {
 
-          //L'utilisateur est redirigé vers la page /users
-          /*$location est un service Angular. Il va nous permettre d'agir sur l'URL de notre navigateur grâce à l'utilisateur de l'objet window.location
-          de notre navigateur contenant les méthode nous permettant de modifier notre URL. On l'utilise donc lorsque l'on souhaite changer l'URL de
-          notre navigateur. La méthode path() de ce service permet si il est appelé avec un paramètre de changer le chemin de notre URL. */
-           $location.path('/user');
+
+          if(data.data.success) {
+            //L'utilisateur est redirigé vers la page /users
+            /*$location est un service Angular. Il va nous permettre d'agir sur l'URL de notre navigateur grâce à l'utilisateur de l'objet window.location
+            de notre navigateur contenant les méthode nous permettant de modifier notre URL. On l'utilise donc lorsque l'on souhaite changer l'URL de
+            notre navigateur. La méthode path() de ce service permet si il est appelé avec un paramètre de changer le chemin de notre URL. */
+             $location.path('/user');
+          }
+          else {
+            vm.error = data.data.message;
+          }
+
+
 
         });
     };
