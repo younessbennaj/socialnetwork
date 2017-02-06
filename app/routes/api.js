@@ -22,6 +22,34 @@ module.exports = function(app, express) {
   qui va nous permettre de gérer les requêtes qui nous sont faites.*/
   var apiRouter = express.Router();
 
+  // //On va créer un user (methode POST sur l'URL http://localhost:8000/api/users)
+  // apiRouter.post('/users', function(req, res) {
+  //   //On va créer une nouvelle instance de notre model User
+  //   var user = new User();
+  //
+  //   //On va ensuite stocker les informations de l'utilisateurs provenant de la requête
+  //   user.firstName = req.body.firstName;
+  //   user.lastName = req.body.lastName;
+  //   user.userName = req.body.userName;
+  //   user.password = req.body.password;
+  //
+  //   //On va sauvegarder notre utilisateur et vérifier s'il y a des erreurs
+  //   user.save(function(err) {
+  //     if(err) {
+  //
+  //       if(err.code == 11000) { //Nous permet de vérifier si un utilisateur existe déjà
+  //         return res.json({ success: false, message: 'Un utilisateur avec ce nom d\'utilisateur existe déjà.'});
+  //       }
+  //       else {
+  //         return res.send(err);
+  //       }
+  //     }
+  //     else {
+  //       res.json({message: 'Utilisateur crée avec succès !'});
+  //     }
+  //   });
+  // }); //fin de la méthode post
+
   /*/Authenticate/*/
 
   /*jsonwebtoken ? C'est un moyen de transmettre de façon sécurisé des informations entre deux parties sous la forme d'un objet JSON. Il peut être utilisé dans deux cas:
@@ -37,6 +65,8 @@ module.exports = function(app, express) {
   XhwIjoxNDg1MjUyNDI3fQ.hNaYjpwShI5rrVMiHjf3pP0utV014weyKmepprYaLPY'*/
 
   // Route pour authentifier un utilisisateur  (Méthode POST sur l'URL http://localhost:8000/api/authenticate)
+  /*maj: Nous avons sortie cette route des routes protégées car nous voulons permettre à n'importe quel utilisateur de créer un compte sans
+  qu'il n'ai à posséder de token.*/
 
   apiRouter.post('/authenticate', function(req, res) {
 
@@ -192,7 +222,7 @@ module.exports = function(app, express) {
           res.json({message: 'Utilisateur crée avec succès !'});
         }
       });
-    })
+    }) //fin de la méthode post
 
     //On va recupérer tous les utilisateurs (Méthode GET sur l'URL http://localhost:8000/api/users )
     .get(function(req, res) {
