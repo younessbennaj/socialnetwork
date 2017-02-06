@@ -189,13 +189,13 @@ angular.module('authenticateService', [])
 
         config.headers['x-access-token'] = token;
 
-        return config;
-
       }
+
+      return config;
 
     };
 
-    /
+
     /*On va préciser qu'il s'agit d'un intercepteur de type ResponseError*/
     /*ResponseError Interceptor:
 
