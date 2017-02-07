@@ -1,0 +1,36 @@
+<form class="form-horizontal" ng-submit="user.saveUser()">
+  <div class="form-group">
+    <label class="col-sm-2 control-label">Prénom</label>
+    <div class="col-sm-6">
+      <input type="text" class="form-control" ng-model="user.userData.firstName">
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">Nom</label>
+    <div class="col-sm-6">
+      <input type="text" class="form-control" ng-model="user.userData.lastName">
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">Identifiant</label>
+    <div class="col-sm-6">
+      <input type="text" class="form-control" ng-model="user.userData.userName">
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">Mot de passe</label>
+    <div class="col-sm-6">
+      <input type="password" class="form-control" ng-model="user.userData.password">
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-6">
+      <button type="submit" class="btn btn-success btn-lg btn-block">S'inscrire</button>
+    </div>
+   </div>
+ </form>
+ <div class="row show-hide-message" ng-show="user.message">
+   <div class="col-sm-6 col-sm-offset-2">
+     <div class="alert alert-info">{{ user.message }}</div>
+   </div>
+ </div>

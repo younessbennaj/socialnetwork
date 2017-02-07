@@ -4,6 +4,7 @@ angular.module("socialApp", [
   'authenticateService',
   'mainCtrl',
   'userCtrl',
+  'signupCtrl',
   'userService'
 ])
 

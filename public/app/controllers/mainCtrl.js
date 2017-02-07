@@ -45,7 +45,7 @@ angular.module('mainCtrl', [])
         .then(function(data) {
 
            vm.user = data.data;
-        
+
 
         });
 
@@ -72,7 +72,8 @@ angular.module('mainCtrl', [])
             de notre navigateur contenant les méthode nous permettant de modifier notre URL. On l'utilise donc lorsque l'on souhaite changer l'URL de
             notre navigateur. La méthode path() de ce service permet si il est appelé avec un paramètre de changer le chemin de notre URL. */
              $location.path('/users');
-             console.log(data);
+             console.log(vm.user);
+
           }
           else {
             vm.error = data.message;

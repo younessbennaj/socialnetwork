@@ -22,9 +22,17 @@ angular.module('app.routes', ['ngRoute'])
         controllerAs: 'login'
       })
 
+      //La route pour lister tous nos utilisateurs
       .when('/users', {
         templateUrl: 'app/views/pages/users/all.html',
         controller: 'userController',
+        controllerAs: 'user'
+      })
+
+      // La route pour la page d'inscription
+      .when('/signup', {
+        templateUrl: 'app/views/pages/signup.html',
+        controller: 'signupController',
         controllerAs: 'user'
       });
 

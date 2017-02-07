@@ -86,7 +86,7 @@ angular.module('authenticateService', [])
         Il y'a donc un moyen de mettre ces informations en cache gràce grâce aux paramètre de configuration de la méthode get() du service $http.
         Donc lorsqu'un appel à la methode getUser() de notre service Authenticate va être fait, notre programme va vérifier si ces informations ne
         sont pas déjà en cache.*/
-        return $http.get('api/me', { cache: true });
+        return $http.get('api/me');
       }
       else {
         return $q.reject({message: 'l\'utilisateur n\'a pas de token'});
