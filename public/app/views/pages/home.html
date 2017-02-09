@@ -1,12 +1,11 @@
-<div class="jumbotron text-center">
-  <h1>Bienvenu sur mon réseau social</h1>
-
-  <div class="center-block">
-    <button class="btn btn-primary center-block">
-        <a href="/login">Se connecter</a>
-    </button>
-    <button class="btn btn-primary center-block">
-        <a href="/signup">S'inscrire</a>
-    </button>
-  </div>
-</div>
+<section class="jumbotron text-center main" ng-if="!main.loggedIn">
+      <div class="container">
+        <h1 class="jumbotron-heading">Social Block</h1>
+        <p class="lead text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit, quam vitae, etc. Ut vel risus tincidunt justo molestie consectetur vitae sed erat. Sed vestibulum nunc sed tortor faucibus tempor</p>
+        <br>
+        <p>
+          <a href="/login" class="btn btn-primary">Connexion</a>
+          <a href="/signup" class="btn btn-secondary">Inscription</a>
+        </p>
+      </div>
+</section>

@@ -1,29 +1,28 @@
-<div class="row col-sm-6 col-sm-offset-3">
+<!-- <div class="row col-sm-6 col-sm-offset-3">
   <div class="text-center">
 
     <h1>Se connecter</h1>
 
     <form class="form-horizontal" ng-submit="login.doLogin()">
 
-      <!-- Champ de l'indentifiant -->
+
 
       <div class="form-group">
-        <!-- <label class="control-label col-sm-2" for="email">Identifiant:</label> -->
+
         <div class="col-sm-12">
           <input ng-model="login.loginData.username" type="text" class="form-control"  placeholder="Entrez votre identifiant">
         </div>
       </div>
 
-      <!-- Champ de l'indentifiant -->
+
 
       <div class="form-group">
-        <!-- <label class="control-label col-sm-2" for="pwd">Mot de passe:</label> -->
+
         <div class="col-sm-12">
           <input ng-model="login.loginData.password" type="password" class="form-control" placeholder="Entrez votre mot de passe">
         </div>
       </div>
 
-      <!-- Envoyer -->
 
       <div class="form-group">
         <div class="col-sm-12">
@@ -37,4 +36,23 @@
 
     </form>
   </div>
+</div> -->
+
+<div class="container signin">
+
+      <form class="form-signin" _lpchecked="1" ng-submit="login.doLogin()">
+        <h2 class="form-signin-heading">Se connecter</h2>
+        <br>
+        <label for="inputUsername" class="sr-only">Identifiant</label>
+        <input ng-model="login.loginData.username" type="text" class="form-control" placeholder="Identifiant" required="" autofocus="">
+        <br>
+        <label for="inputPassword" class="sr-only">Mot de passe</label>
+        <input ng-model="login.loginData.password" type="password" class="form-control" placeholder="Mot de passe" required="">
+        <br>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        <div class="alert alert-danger" ng-if="login.error">
+          {{login.error}}
+        </div>
+      </form>
+
 </div>

@@ -1,36 +1,24 @@
-<form class="form-horizontal" ng-submit="user.saveUser()">
-  <div class="form-group">
-    <label class="col-sm-2 control-label">Prénom</label>
-    <div class="col-sm-6">
-      <input type="text" class="form-control" ng-model="user.userData.firstName">
-    </div>
-  </div>
-  <div class="form-group">
-    <label class="col-sm-2 control-label">Nom</label>
-    <div class="col-sm-6">
-      <input type="text" class="form-control" ng-model="user.userData.lastName">
-    </div>
-  </div>
-  <div class="form-group">
-    <label class="col-sm-2 control-label">Identifiant</label>
-    <div class="col-sm-6">
-      <input type="text" class="form-control" ng-model="user.userData.userName">
-    </div>
-  </div>
-  <div class="form-group">
-    <label class="col-sm-2 control-label">Mot de passe</label>
-    <div class="col-sm-6">
-      <input type="password" class="form-control" ng-model="user.userData.password">
-    </div>
-  </div>
-  <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-6">
-      <button type="submit" class="btn btn-success btn-lg btn-block">S'inscrire</button>
-    </div>
-   </div>
- </form>
- <div class="row show-hide-message" ng-show="user.message">
-   <div class="col-sm-6 col-sm-offset-2">
-     <div class="alert alert-info">{{ user.message }}</div>
-   </div>
- </div>
+<div class="container signup">
+
+      <form class="form-signin" _lpchecked="1" ng-submit="user.saveUser()">
+        <h2 class="form-signin-heading">S'inscrire</h2>
+        <br>
+        <label for="inputUsername" class="sr-only">Identifiant</label>
+        <input ng-model="user.userData.userName" type="text" class="form-control" placeholder="Identifiant" required="" autofocus="">
+        <br>
+        <label for="inputFirstname" class="sr-only">Prénom</label>
+        <input ng-model="user.userData.firstName" type="text" class="form-control" placeholder="Prénom" required="" autofocus="">
+        <br>
+        <label for="inputLastname" class="sr-only">Nom</label>
+        <input ng-model="user.userData.lastName" type="text" class="form-control" placeholder="Nom" required="" autofocus="">
+        <br>
+        <label for="inputPassword" class="sr-only">Mot de passe</label>
+        <input ng-model="user.userData.password" type="password" class="form-control" placeholder="Mot de passe" required="">
+        <br>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">S'inscrire</button>
+        <div class="alert alert-info" ng-show="user.message">
+          {{ user.message }}
+        </div>
+      </form>
+
+</div>

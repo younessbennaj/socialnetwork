@@ -1,3 +1,50 @@
-main {
-  padding-top: 50px;
+body {
+  background-color: #eee;
+}
+
+/*Main section - index.html*/
+
+.main {
+  background-color: #fff;
+}
+/*Navbar - index.html*/
+
+.navbar {
+  margin-bottom: 0px !important;
+}
+
+/*Form Signup - login.html*/
+
+.signin {
+  margin-top: 50px;
+}
+
+.signin form {
+  width: 330px;
+  margin: 0 auto;
+}
+
+/*Form Signup - signup.html*/
+
+.signup {
+  margin-top: 50px;
+}
+
+.signup form {
+  width: 330px;
+  margin: 0 auto;
+}
+
+/*Users list - users/all.html*/
+
+.users-list {
+  margin-top: 50px;
+}
+.user-card {
+  width: 800px;
+  margin: 20px auto;
+}
+
+.user-card a span {
+  color: #fff;
 }
