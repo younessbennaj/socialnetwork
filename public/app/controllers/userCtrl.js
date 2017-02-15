@@ -2,7 +2,7 @@
 
 angular.module('userCtrl', ['userService'])
 
-  .controller('userController', function(User) {
+  .controller('userController', function($routeParams, User) {
 
     var vm = this;
 
@@ -12,10 +12,15 @@ angular.module('userCtrl', ['userService'])
     User.all()
       .then(function(data) {
 
-        console.log(data);
-
         //On va stocké nos utilisateurs dans la variable vm.users
         vm.users = data.data;
+
+      });
+
+    User.get($routeParams.user_id)
+      .then(function(data) {
+
+        vm.user = data.data;
 
       });
 

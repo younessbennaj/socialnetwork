@@ -34,6 +34,12 @@ angular.module('app.routes', ['ngRoute'])
         templateUrl: 'app/views/pages/signup.html',
         controller: 'signupController',
         controllerAs: 'user'
+      })
+
+      .when('/users/:user_id', {
+        templateUrl: 'app/views/pages/users/single.html',
+        controller: 'userController',
+        controllerAs: 'user'
       });
 
     //On peut ajouter une dernière règle (otherwise()) qui permet de définir la règle par défaut si aucune règle n'a matché
