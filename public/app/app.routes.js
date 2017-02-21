@@ -12,7 +12,9 @@ angular.module('app.routes', ['ngRoute'])
 
       //La route pour notre home page
       .when('/', {
-        templateUrl: 'app/views/pages/home.html'
+        templateUrl: 'app/views/pages/home.html',
+        controller: 'postController',
+        controllerAs: 'post'
       })
 
       //La route pour la page login

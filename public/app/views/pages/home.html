@@ -9,3 +9,22 @@
         </p>
       </div>
 </section>
+
+<div class="container user-posts" ng-if="main.loggedIn">
+<div class="row post" ng-repeat="post in post.posts">
+  <div class="col-2">
+    <img src="http://placehold.it/70x70" class="rounded" alt="...">
+  </div>
+  <div class="col">
+    <h6>Nom prenom</h6>
+    <br>
+    <p> {{post.content}} </p>
+    <div class="row post-actions">
+      <ul>
+        <li><a class="text-danger" href="">Liker</a></li>
+        <li><a href="">Commenter</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+</div>

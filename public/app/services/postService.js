@@ -19,14 +19,6 @@ angular.module('postService', [])
     return $http.post('api/posts', postData);
   }
 
-  //Mettre à jour un post
-  // postFactory.update = function(id, postData) {
-  //   return $http.put('api/posts' + id, postData);
-  // }
+  return postFactory;
 
-  //Nous permet de supprimer un utilisateur
-  // postFactory.delete = function(id) {
-  //   return $http.delete('api/posts/' + id);
-  // }
-
-  return userFactory;
+});

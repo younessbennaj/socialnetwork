@@ -39,6 +39,7 @@ angular.module('mainCtrl', [])
 
       vm.loggedIn = Authenticate.isLoggedIn(); //retourne true ou false
 
+
       //Cette fonction va nous permettre de récupérer les données associés à l'utilisateur loggé
       Authenticate.getUser()
 
