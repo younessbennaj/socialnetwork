@@ -48,3 +48,71 @@ body {
 .user-card a span {
   color: #fff;
 }
+
+/* Profil User - users/single.html */
+
+/*profil header */
+
+.profil-header {
+  height: 300px;
+}
+
+.profil-header ul {
+  width: 200px;
+  padding-left: 0px;
+}
+
+.profil-header ul li {
+  margin-right: 40px;
+  margin-left: 0px;
+  display: inline-block;
+}
+
+.profil-header ul li a {
+  color: white;
+}
+
+.profil-header ul li a:hover {
+  color: white;
+  text-decoration: none;
+}
+
+/*profil stats */
+
+.profil-stats {
+  height: 80px;
+}
+
+.profil-stats h4 {
+  margin-top: 12px;
+}
+
+/* user-posts */
+
+.user-posts {
+  margin-top: 50px;
+  width: 750px;
+  background-color: #fff;
+}
+
+.post {
+  padding-top: 20px;
+  border-bottom: #e1e1e1;
+}
+
+.post-actions {
+  width: 50%;
+}
+
+.post-actions ul {
+  padding-left: 15px;
+}
+
+.post-actions ul li {
+  margin-right: 20px;
+  display: inline-block;
+}
+
+.post-actions ul li a {
+  text-decoration: none;
+}

@@ -111,7 +111,8 @@ module.exports = function(app, express) {
             var token = jwt.sign({
                   userName: user.userName,
                   firstName: user.firstName,
-                  lastName: user.lastName
+                  lastName: user.lastName,
+                  _id: user._id
                 }, mySecret,
                   { expiresIn: '24h' } //Expire au bout de 24h, une nouvelle authentification sera nécessaire
                 );
