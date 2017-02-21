@@ -1,5 +1,7 @@
 var User = require('../models/user');
-//On va mainteant importer notre modèle pour pouvoir l'utiliser dans notre application (app/models/user.js)
+//On va importer notre modèle d'utilisateur pour pouvoir l'utiliser dans notre application (app/models/user.js)
+var Post = require('../models/post');
+//On va importer notre modèle de post pour pouvoir l'utiliser dans notre application (app/models/post.js)
 var jwt = require('jsonwebtoken');
 //On va faire appel au module jsonwebtoken
 var config = require('../../config');
@@ -319,6 +321,123 @@ module.exports = function(app, express) {
         }
       })
     });//Fin de delete
+
+  //Notre route api qui va concerner les différentes posts de nos utilisateurs //
+  apiRouter.route('/posts')
+
+  //On va créer un post (methode POST sur l'URL http://localhost:8000/api/posts)
+  .post(function(req, res) {
+    //On va créer une nouvelle instance de notre model Post
+    var post = new Post();
+
+    //On va ensuite stocker les informations du post provenant de la requête
+    post.user_id = req.body.user_id;
+    post.content = req.body.content;
+    post.likes = 0;
+    post.comments = 0;
+
+    //On va sauvegarder notre post et vérifier s'il y a des erreurs
+    post.save(function(err) {
+      if(err) {
+          return res.send(err);
+      }
+      else {
+        res.json({message: 'Post crée avec succès !'});
+      }
+    });
+  }) //fin de la méthode post
+
+  //On va recupérer tous les posts (Méthode GET sur l'URL http://localhost:8000/api/posts )
+  .get(function(req, res) {
+
+    Post.find(function(err, posts) {
+      if(err) {
+        res.send(err);
+      }
+      else {
+        res.json(posts);
+      }
+    });
+  }); //fin de la méthode get
+
+  apiRouter.route('/posts/:post_id')
+
+  //On va recupérer un seul post (Méthode GET sur l'URL http://localhost:8000/api/posts/:post_id )
+
+.get(function(req, res) {
+
+  //La methode findById() de notre model permet de trouver l'utilsateur que l'on veut grâce à l'Id que l'on récupère dans la requète
+  Post.findById(req.params.post_id, function(err, post) {
+
+    if(err) {
+      res.send(err);
+    }
+    else {
+      res.json(post);
+    }
+
+  });
+}) //Fin de la méthode get
+
+//On va modifier un seul utilisateur (Méthode PUT sur l'URL http://localhost:8000/api/users/:user_id )
+
+.put(function(req, res) {
+
+  //La methode findById() de notre model permet de trouver le post que l'on veut grâce à l'Id que l'on récupère dans la requète
+  Post.findById(req.params.post_id, function(err, post) {
+
+    if(err) {
+      res.send(err);
+    }
+
+    else {
+
+      //On va mettre à jour les informations uniquement si nécessaire
+
+      if(req.body.content) {
+        post.content = req.body.content;
+      }
+
+      if(req.body.likes) {
+        post.likes = req.body.likes;
+      }
+
+      if(req.body.comments) {
+        post.comments = req.body.comments;
+      }
+
+      //On sauvegarde notre utilisateur dans notre base de donnée
+
+      post.save(function(err) {
+        if(err) {
+          res.send(err);
+        }
+        else {
+          res.json( {message: 'Post mis à jour !'});
+        }
+
+      })//post.save
+
+    }//fin du else
+
+  })//Post.findById
+
+})//Fin du put
+
+//On va supprimer un post dans notre base de donnée (Méthode DELETE sur l'URL http://localhost:8000/api/posts/:post_id )
+.delete(function(req, res) {
+
+  //On utilise la méthode remove() de notre model avec comme condition l'Id de l'utilisateur que l'on récupère dans la requête
+  Post.remove( { _id : req.params.post_id}, function(err) {
+    if(err) {
+      return res.send(err);
+    }
+    else {
+      res.json({message: 'Post supprimé avec succès'});
+    }
+  })
+});//Fin de delete
+
 
 
   //D'autres routes pour notre API sont à venir

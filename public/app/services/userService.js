@@ -2,8 +2,6 @@
 
 /*Le service $http de Angular va nous permettre de communiquer avec le backend et de pouvoir faire des requêtes http. */
 
-/* On va d'abord créer notre module authenticateService qui va regrouper notr 3 factory. Ce module pourra être injecter par exemple dans celui qui
-contiendra nos controllers. Les propriétés et les fonctions de notre service sera alors accessible dans nos controllers.*/
 
 angular.module('userService', [])
   .factory('User', function($http) {

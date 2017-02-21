@@ -1,6 +1,6 @@
 //User.js
 
-//Ce fichier va nous permettre de définir notre modèle
+//Ce fichier va nous permettre de définir notre modèle d'utilisateur
 
 //Mongoose utilise des Schema pour modéliser les données. Cela permet de définir les types de variables et de structurer les données.
 //Ce Schema prend la forme d'un objet JSON
@@ -10,8 +10,6 @@ var mongoose = require('mongoose');
 //Mongoose nous propose pour cela la méthode Schema() que nous allons stocker dans la variable Schema
 var Schema = mongoose.Schema;
 
-//va nous permettre de hasher les mots de passe pour plus de sécurité
-var bcrypt = require('bcrypt-nodejs')
 
 //On va affecter à chaque propriété le type de champ attendu
 var UserSchema   = new Schema({
