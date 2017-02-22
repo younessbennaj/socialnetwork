@@ -18,30 +18,27 @@ angular.module('postCtrl', ['postService', 'userService', 'authenticateService']
 
       });
 
-      //On va créer la fonction qui va nous permettre de récupérer l'utilisateur correspondant à chaque post
-      /*L'idée est la suivante: A chaque post correspond un utilisateur qui est défini par son Id. On va donc grâce à cet Id pouvoir
-      récupérer le nom et le prénom de l'utilisateur correspondant à ce post. */
-      //
+      //Permet de récupérer les données de l'utilisateur connecté. On va utiliser ces données pour les attacher au post que l'utilisateur va créer
 
+    Authenticate.getUser()
 
-        Authenticate.getUser()
+      .then(function(data) {
 
-          .then(function(data) {
+          vm.user = data.data;
 
-             vm.user = data.data;
-
-             console.log(vm.user);
-
-
-
-          });
+      });
 
 
 
       vm.savePost = function() {
 
+        //On va associé le nom et le prénom de l'utilisateur au post de ce dernier
+
         vm.postData.userFirstName = vm.user.firstName;
         vm.postData.userLastName = vm.user.lastName;
+        vm.postData.postDate = new Date();
+
+        console.log(vm.postData);
 
         //On va faire appelle à la fonction create() de notre service Post qui va nous permettre de créer un nouveau post
         //Cette fonction va prendre en argument l'objet qui contient les différentes informations de notre post nécessaire à sa création
@@ -61,13 +58,5 @@ angular.module('postCtrl', ['postService', 'userService', 'authenticateService']
             // vm.message = data.data.message; //Permet d'informer notre utilisateur sur l'état de sa requête
           });
       };
-
-
-    // User.all()
-    //   .then(function(data) {
-    //
-    //     vm.users = data.data;
-    //   });
-
 
   });

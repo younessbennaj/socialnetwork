@@ -14,6 +14,7 @@ var PostSchema   = new Schema({
   userFirstName: String,
   userLastName: String,
   content: String,
+  postDate: Date,
   likes: Number,
   comments: Number
 });

@@ -36,7 +36,10 @@ body {
 }
 
 /*Users list - users/all.html*/
-
+.search-friends {
+  width: 500px;
+  margin: 50px auto;
+}
 .users-list {
   margin-top: 50px;
 }

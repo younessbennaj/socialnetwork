@@ -334,6 +334,7 @@ module.exports = function(app, express) {
     post.userFirstName = req.body.userFirstName;
     post.userLastName = req.body.userLastName;
     post.content = req.body.content;
+    post.postDate = req.body.postDate;
     post.likes = 0;
     post.comments = 0;
 

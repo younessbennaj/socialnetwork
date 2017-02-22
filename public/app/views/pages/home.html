@@ -12,7 +12,6 @@
 
 <div class="container user-posts" ng-if="main.loggedIn">
   <form ng-submit="post.savePost()">
-    {{post.user._id}}
     <div class="container post-form">
       <div class="form-group text-center">
         <label for="exampleTextarea"></label>
@@ -22,7 +21,7 @@
     </div>
   <form>
   </br>
-  <div class="row post" ng-repeat="post in post.posts">
+  <div class="row post" ng-repeat="post in post.posts | orderBy : 'postDate':true">
     <div class="col-2">
       <img src="http://placehold.it/70x70" class="rounded" alt="...">
     </div>
@@ -32,7 +31,7 @@
       <p> {{post.content}} </p>
       <div class="row post-actions">
         <ul>
-          <li><a class="text-danger" href="">Liker</a></li>
+          <li><a class="text-danger" href="" ng-click="updateLike()">Liker</a></li>
           <li><a href="">Commenter</a></li>
         </ul>
       </div>
