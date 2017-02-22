@@ -12,6 +12,7 @@
 
 <div class="container user-posts" ng-if="main.loggedIn">
   <form ng-submit="post.savePost()">
+    {{post.user._id}}
     <div class="container post-form">
       <div class="form-group text-center">
         <label for="exampleTextarea"></label>
@@ -26,7 +27,7 @@
       <img src="http://placehold.it/70x70" class="rounded" alt="...">
     </div>
     <div class="col">
-      <h6>Nom prenom</h6>
+      <h6> {{post.user_id}} prenom</h6>
       <br>
       <p> {{post.content}} </p>
       <div class="row post-actions">
