@@ -40,7 +40,8 @@ angular.module('postCtrl', ['postService', 'userService', 'authenticateService']
 
       vm.savePost = function() {
 
-        vm.postData.user_id = vm.user._id;
+        vm.postData.userFirstName = vm.user.firstName;
+        vm.postData.userLastName = vm.user.lastName;
 
         //On va faire appelle à la fonction create() de notre service Post qui va nous permettre de créer un nouveau post
         //Cette fonction va prendre en argument l'objet qui contient les différentes informations de notre post nécessaire à sa création

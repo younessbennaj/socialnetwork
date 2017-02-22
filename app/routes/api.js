@@ -331,7 +331,8 @@ module.exports = function(app, express) {
     var post = new Post();
 
     //On va ensuite stocker les informations du post provenant de la requête
-    post.user_id = req.body.user_id;
+    post.userFirstName = req.body.userFirstName;
+    post.userLastName = req.body.userLastName;
     post.content = req.body.content;
     post.likes = 0;
     post.comments = 0;
