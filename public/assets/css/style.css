@@ -87,6 +87,12 @@ body {
   margin-top: 12px;
 }
 
+/*Post Form*/
+
+.post-form {
+  width: 750px;
+}
+
 /* user-posts */
 
 .user-posts {
