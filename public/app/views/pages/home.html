@@ -31,7 +31,7 @@
       <p> {{onePost.content}}</p>
       <div class="row post-actions">
         <ul>
-          <li><a class="text-danger" href="" ng-click="post.updateLike(onePost._id)">Like {{onePost.likes}}</a></li>
+          <li><a class="text-danger" href="" ng-click="post.updateLike(onePost._id, main.user._id)">Like {{onePost.likes.length}}</a></li>
           <li><a href="">Commenter</a></li>
         </ul>
       </div>

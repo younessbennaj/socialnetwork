@@ -40,7 +40,6 @@ angular.module('userCtrl', ['userService'])
 
       });
 
-      console.log(vm.userData);
 
       vm.saveUser = function() {
 

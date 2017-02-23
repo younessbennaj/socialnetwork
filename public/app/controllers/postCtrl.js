@@ -26,6 +26,7 @@ angular.module('postCtrl', ['postService', 'userService', 'authenticateService']
 
           vm.user = data.data;
 
+
       });
 
 
@@ -33,7 +34,6 @@ angular.module('postCtrl', ['postService', 'userService', 'authenticateService']
       vm.savePost = function() {
 
         //On va associé le nom et le prénom de l'utilisateur au post de ce dernier
-        console.log(vm.postData);
         vm.postData.userFirstName = vm.user.firstName;
         vm.postData.userLastName = vm.user.lastName;
         vm.postData.postDate = new Date();
@@ -48,8 +48,7 @@ angular.module('postCtrl', ['postService', 'userService', 'authenticateService']
           .then(function(data) {
 
             //On va pusher nos données dans le tableau qui contient tout nos postes pour qu'Angular puisse binder ces données à la vue
-
-            vm.posts.push(vm.postData);
+            vm.posts.push(data.data.post);
 
             //On va clearer le formulaire de création de posts
             vm.postData = {};
@@ -60,29 +59,135 @@ angular.module('postCtrl', ['postService', 'userService', 'authenticateService']
       };
 
 
+      /*Cette fonction va permettre à nos utilisateur de pourvoir "liker" une publication.*/
+      //On va récupérer à la fois l'Id de l'utilisateur et celui du post
+      vm.updateLike = function(postId, userId) {
 
-      // vm.updateLike = function(postId) {
-      //
-      //   /* Pour le système de like on va créer un tableau qui contiendra l'Id de l'utilisateur qui a liker. Pour définir le nombre de like
-      //   On va tenir compte de la taille du tableau, de plus si l'Id de la personne qui à liker est dejà dans le tableau alors on incrémenter
-      //   pas le nombre de like.*/
-      //
-      //
-      //   Post.get(postId)
-      //     .then(function(data) {
-      //
-      //       vm.post = data.data;
-      //
-      //       vm.post.likes++;
-      //
-      //       Post.update(postId, vm.post)
-      //         .then(function(data) {
-      //
-      //         })
-      //
-      //     })
-      //
-      // };
+        var isLiked;
+
+        //On va utiliser la méthode get pour récupérer un post unique sur lequel on a cliquer 'like' grâce à son Id
+        Post.get(postId)
+          .then(function(data) {
+
+            //On va récupérer les données du post sur lequel on cliquer sur "like"
+
+            vm.postLikeData = data.data;
+
+            //Va nous permettre de savoir si un utilisateur à déjà liker la publication
+
+            for(var i = 0; i < vm.postLikeData.likes.length; i++) {
+              if(vm.postLikeData.likes[i] == userId) {
+                isLiked = true;
+
+                }
+            }
+
+
+
+            //Si l'utilisateur n'a pas encore liker la publication alors on incrémente le compteur à like
+            if(!isLiked) {
+
+              //On va stocker danns le tableau l'id de l'utilisateur qui à liker la publication
+              vm.postLikeData.likes.push(userId);
+
+              //On fait appelle à la fonction update de notre service post pour mettre à jour le post
+              Post.update(postId, vm.postLikeData)
+              .then(function(data) {
+
+                console.log(data.data);
+
+                //En réponse le serveur va nous renvoyer le post mis à jour
+
+                //On va ensuite boucler notre tableau des posts pour mettre à jour notre post (likes) pour mettre à jour notre vue
+                for(var i = 0; i < vm.posts.length; i++) {
+                  if(vm.posts[i]._id == postId ) {
+                    vm.posts[i].likes =  data.data.post.likes;
+                  }
+                }
+              }); //Fin du update
+
+            }
+            //Sinon
+
+            else {
+
+              isLiked = false;
+
+              //On va utiliser la méthode get pour récupérer un post unique sur lequel on a cliquer 'like' grâce à son Id
+              Post.get(postId)
+                .then(function(data) {
+
+                    //On va récupérer les données du post sur lequel on cliquer sur "like"
+
+                    vm.postDislikeData = data.data;
+
+                    //On va supprimer l'Id de l'utilisateur dans le tableau des likes
+                    for(var i = 0 ; i < vm.postDislikeData.likes.length; i++) {
+
+                      if(vm.postDislikeData.likes[i] == userId) {
+
+                          vm.postDislikeData.likes.splice(i,1);
+
+
+                        }
+
+                    }
+
+
+                    //On fait appelle à la fonction update de notre service post pour mettre à jour le post
+                    Post.update(postId, vm.postDislikeData)
+                    .then(function(data) {
+
+                      console.log(data.data);
+
+                      // En réponse le serveur va nous renvoyer le post mis à jour
+
+                      // On va ensuite boucler notre tableau des posts pour mettre à jour notre post (likes) pour mettre à jour notre vue
+                      for(var i = 0; i < vm.posts.length; i++) {
+                        if(vm.posts[i]._id == postId ) {
+                          vm.posts[i].likes =  data.data.post.likes;
+                        }
+                      }
+
+                    }); //Fin du update
+
+                });
+
+           }
+
+
+
+
+
+
+
+
+
+
+
+            //Comme on a cliquer sur le like "ng-click" on va donc injecter dans le tableau l'id de l'utilisateur qui à cliquer
+            // vm.postLikeData.likes.push(userId);
+
+            /*On va ensuite répércuter ce changement dans la vue en incrémentant le nombre de like du post présent dans la tableau
+            de post qu'on à récupérer juste avant et binder dans la vue grâce à la directive ng-repeat. On va donc utiliser pour ça
+            la propriété length de notre tableau contenant tous les Id pour savoir le nombre d'utilisateur qui ont liker. On a changer
+            de méthode pour pouvoir empécher un utilisateur de liker plusieur fois le même post. */
+
+
+            // for(var i = 0; i < vm.posts.length; i++) {
+            //   if(vm.posts[i]._id == postId ) {
+            //     vm.posts[i].likes =  vm.postLikeData.likes;
+            //   }
+            // }
+
+            /*On va ensuite répércuter ce changement dans notre base de données pour que le changement puisse persister même si on raffraichit
+            la page (persistance coté serveur).*/
+
+
+
+          }); //fin du get
+
+      }; //Fin de la fonction updateLike
 
 
   });

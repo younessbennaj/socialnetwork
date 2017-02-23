@@ -335,7 +335,7 @@ module.exports = function(app, express) {
     post.userLastName = req.body.userLastName;
     post.content = req.body.content;
     post.postDate = req.body.postDate;
-    post.likes = 0;
+    post.likes = [];
     post.comments = 0;
 
     //On va sauvegarder notre post et vérifier s'il y a des erreurs
@@ -344,7 +344,7 @@ module.exports = function(app, express) {
           return res.send(err);
       }
       else {
-        res.json({message: 'Post crée avec succès !'});
+        res.json({message: 'Post crée avec succès !', post: post});
       }
     });
   }) //fin de la méthode post
@@ -360,7 +360,21 @@ module.exports = function(app, express) {
         res.json(posts);
       }
     });
-  }); //fin de la méthode get
+  }) //fin de la méthode get
+
+  //On va supprimer un post dans notre base de donnée (Méthode DELETE sur l'URL http://localhost:8000/api/posts/:post_id )
+  .delete(function(req, res) {
+
+    //On utilise la méthode remove() de notre model avec comme condition l'Id de l'utilisateur que l'on récupère dans la requête
+    Post.remove( function(err) {
+      if(err) {
+        return res.send(err);
+      }
+      else {
+        res.json({message: 'tous les posts supprimés avec succès'});
+      }
+    })
+  });//Fin de delete
 
   apiRouter.route('/posts/:post_id')
 
@@ -401,7 +415,7 @@ module.exports = function(app, express) {
       }
 
       if(req.body.likes) {
-        post.likes = req.body.likes;
+        post.likes = req.body.likes; //On va placer des id des utilisateurs dans le tableau des likes
       }
 
       if(req.body.comments) {
@@ -415,7 +429,7 @@ module.exports = function(app, express) {
           res.send(err);
         }
         else {
-          res.json( {message: 'Post mis à jour !'});
+          res.json( {message: 'Post mis à jour !', post: post});
         }
 
       })//post.save
