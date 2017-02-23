@@ -21,17 +21,17 @@
     </div>
   <form>
   </br>
-  <div class="row post" ng-repeat="post in post.posts | orderBy : 'postDate':true">
+  <div class="row post" ng-repeat="onePost in post.posts | orderBy : 'postDate':true">
     <div class="col-2">
       <img src="http://placehold.it/70x70" class="rounded" alt="...">
     </div>
     <div class="col">
-      <h6> {{post.userFirstName}} {{post.userLastName}}</h6>
+      <h6> {{onePost.userFirstName}} {{onePost.userLastName}}</h6>
       <br>
-      <p> {{post.content}} </p>
+      <p> {{onePost.content}}</p>
       <div class="row post-actions">
         <ul>
-          <li><a class="text-danger" href="" ng-click="updateLike()">Liker</a></li>
+          <li><a class="text-danger" href="" ng-click="post.updateLike(onePost._id)">Like {{onePost.likes}}</a></li>
           <li><a href="">Commenter</a></li>
         </ul>
       </div>

@@ -1,0 +1,24 @@
+<div class="container signup">
+
+      <form class="form-signin" _lpchecked="1" ng-submit="user.saveUser()">
+        <h2 class="form-signin-heading">Editer</h2>
+        <br>
+        <label for="inputUsername" class="sr-only">Identifiant</label>
+        <input ng-model="user.userData.userName" type="text" class="form-control" placeholder="Identifiant" autofocus="">
+        <br>
+        <label for="inputFirstname" class="sr-only">Prénom</label>
+        <input ng-model="user.userData.firstName" type="text" class="form-control" placeholder="Prénom"  autofocus="">
+        <br>
+        <label for="inputLastname" class="sr-only">Nom</label>
+        <input ng-model="user.userData.lastName" type="text" class="form-control" placeholder="Nom"  autofocus="">
+        <br>
+        <label for="inputPassword" class="sr-only">Mot de passe</label>
+        <input ng-model="user.userData.password" type="password" class="form-control" placeholder="Mot de passe">
+        <br>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Editer</button>
+        <div class="alert alert-info" ng-show="user.message">
+          {{ user.message }}
+        </div>
+      </form>
+
+</div>

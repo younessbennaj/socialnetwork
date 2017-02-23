@@ -25,7 +25,7 @@ angular.module('userService', [])
 
     //Mettre à jour un utilisateur
     userFactory.update = function(id, userData) {
-      return $http.put('api/users' + id, userData);
+      return $http.put('api/users/' + id, userData);
     }
 
     //Nous permet de supprimer un utilisateur

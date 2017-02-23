@@ -33,12 +33,13 @@ angular.module('postCtrl', ['postService', 'userService', 'authenticateService']
       vm.savePost = function() {
 
         //On va associé le nom et le prénom de l'utilisateur au post de ce dernier
-
+        console.log(vm.postData);
         vm.postData.userFirstName = vm.user.firstName;
         vm.postData.userLastName = vm.user.lastName;
         vm.postData.postDate = new Date();
 
-        console.log(vm.postData);
+
+
 
         //On va faire appelle à la fonction create() de notre service Post qui va nous permettre de créer un nouveau post
         //Cette fonction va prendre en argument l'objet qui contient les différentes informations de notre post nécessaire à sa création
@@ -48,7 +49,6 @@ angular.module('postCtrl', ['postService', 'userService', 'authenticateService']
 
             //On va pusher nos données dans le tableau qui contient tout nos postes pour qu'Angular puisse binder ces données à la vue
 
-            console.log(vm.postData);
             vm.posts.push(vm.postData);
 
             //On va clearer le formulaire de création de posts
@@ -58,5 +58,31 @@ angular.module('postCtrl', ['postService', 'userService', 'authenticateService']
             // vm.message = data.data.message; //Permet d'informer notre utilisateur sur l'état de sa requête
           });
       };
+
+
+
+      // vm.updateLike = function(postId) {
+      //
+      //   /* Pour le système de like on va créer un tableau qui contiendra l'Id de l'utilisateur qui a liker. Pour définir le nombre de like
+      //   On va tenir compte de la taille du tableau, de plus si l'Id de la personne qui à liker est dejà dans le tableau alors on incrémenter
+      //   pas le nombre de like.*/
+      //
+      //
+      //   Post.get(postId)
+      //     .then(function(data) {
+      //
+      //       vm.post = data.data;
+      //
+      //       vm.post.likes++;
+      //
+      //       Post.update(postId, vm.post)
+      //         .then(function(data) {
+      //
+      //         })
+      //
+      //     })
+      //
+      // };
+
 
   });

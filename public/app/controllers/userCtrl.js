@@ -25,4 +25,30 @@ angular.module('userCtrl', ['userService'])
       });
 
 
+  })
+
+  .controller('userEditController', function($routeParams, User) {
+
+    var vm = this;
+
+    //On récupère un utlisateur unique grâce à son Id
+
+    User.get($routeParams.user_id)
+      .then(function(data) {
+
+        vm.userData = data.data;
+
+      });
+
+      console.log(vm.userData);
+
+      vm.saveUser = function() {
+
+        User.update($routeParams.user_id, vm.userData)
+          .then(function(data) {
+
+            vm.userData = {};
+
+          });
+      };
   });

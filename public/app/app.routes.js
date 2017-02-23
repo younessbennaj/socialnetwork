@@ -38,9 +38,16 @@ angular.module('app.routes', ['ngRoute'])
         controllerAs: 'user'
       })
 
+      //La route pour la page d'un utilisateur unique
       .when('/users/:user_id', {
         templateUrl: 'app/views/pages/users/single.html',
         controller: 'userController',
+        controllerAs: 'user'
+      })
+
+      .when('/edit/:user_id', {
+        templateUrl: 'app/views/pages/users/edit.html',
+        controller: 'userEditController',
         controllerAs: 'user'
       });
 

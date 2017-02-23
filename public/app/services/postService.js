@@ -8,6 +8,11 @@ angular.module('postService', [])
 
   var postFactory = {};
 
+  //Nous permet de retourner les données d'un post unique grâce à son ID
+  postFactory.get = function(id) {
+    return $http.get('api/posts/' + id);
+  }
+
 
   //Nous permet de retrouner la liste de tout les posts
   postFactory.all = function() {
@@ -17,6 +22,11 @@ angular.module('postService', [])
   //Nous permet de créer un nouveau post
   postFactory.create = function(postData) {
     return $http.post('api/posts', postData);
+  }
+
+  //Mettre à jour un post
+  postFactory.update = function(id, postData) {
+    return $http.put('api/posts/' + id, postData);
   }
 
   return postFactory;
