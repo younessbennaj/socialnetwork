@@ -185,7 +185,9 @@ angular.module('postCtrl', ['postService', 'userService', 'authenticateService']
 
       /*/Fonction updateComment()/*/
 
-      vm.updateComment = function(postId, userId, postComment) {
+      vm.updateComment = function(postId, user, postComment) {
+
+
 
         Post.get(postId)
           .then(function(data) {
@@ -194,16 +196,18 @@ angular.module('postCtrl', ['postService', 'userService', 'authenticateService']
             vm.postCommentData = data.data;
 
             //On va stocker notre commentaire dans le tableau des commentaires de notre post
-            vm.postCommentData.comments.push(postComment);
-
+            vm.postCommentData.comments.push({comment: postComment, user: user});
+            console.log(vm.postCommentData.comments);
 
 
 
 
             //On va mettre à jour notre poste coté serveur dans notre API grâce à la méthode http put et la fonction update de notre service
-
+            console.log(vm.postCommentData);
             Post.update(postId, vm.postCommentData)
               .then(function(data) {
+
+                console.log(data);
 
                 for(var i = 0; i < vm.posts.length; i++) {
                   if(vm.posts[i]._id == postId ) {

@@ -49,12 +49,23 @@
           <form>
             <div class="form-group comment-action">
               <input ng-model="onePost.postComment" type="text" class="form-control comment-form"  placeholder="Votre commentaire" required="">
-              <a href="" class="btn btn-danger comment-button" ng-click="post.updateComment(onePost._id, main.user._id, onePost.postComment)">Commenter</a>
+              <a href="" class="btn btn-danger comment-button" ng-click="post.updateComment(onePost._id, main.user, onePost.postComment)">Commenter</a>
             </div>
           </form>
           <div class="comment-list">
             <ul class="list-group">
-              <li ng-repeat="comment in onePost.comments track by $index" class="list-group-item">{{ comment }}</li>
+              <li ng-repeat="comment in onePost.comments track by $index" class="list-group-item">
+                <div class="row comment-profil">
+                <div class="col-2">
+                  <img src="http://placehold.it/50x50">
+                </div>
+                <div class="col-10">
+                  <h6>{{ comment.user.firstName }} {{ comment.user.lastName }}</h6>
+                  <br />
+                  <p>{{ comment.comment }}</p>
+                </div>
+              </div>
+              </li>
             </ul>
           </div>
         </div>
