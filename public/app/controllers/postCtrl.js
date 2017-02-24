@@ -14,6 +14,7 @@ angular.module('postCtrl', ['postService', 'userService', 'authenticateService']
       .then(function(data) {
 
         //On va stocké nos utilisateurs dans la variable vm.users
+
         vm.posts = data.data;
 
 
@@ -167,11 +168,17 @@ angular.module('postCtrl', ['postService', 'userService', 'authenticateService']
 
       /*/Fonction showComment()/*/
 
-      vm.showComment = function() {
+      vm.showComment = function(postId) {
 
-        vm.commentClicked = !vm.commentClicked;
+        //Nous permet de trouver le post correspondant aux commentaire qu'on veut afficher
 
+        for(var i = 0; i < vm.posts.length; i++) {
+          if(vm.posts[i]._id == postId ) {
 
+            //On passe la variable permettant de faire apparraitre les commentaires à true ou false en fonction des besoins
+            vm.posts[i].commentClicked = !vm.posts[i].commentClicked;
+          }
+        }
 
 
       };
