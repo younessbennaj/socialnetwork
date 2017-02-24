@@ -38,22 +38,24 @@
           <div class="row post-actions">
             <ul>
               <li><a class="text-danger" href="" ng-click="post.updateLike(onePost._id, main.user._id)">Like {{onePost.likes.length}}</a></li>
-              <li><a href="" ng-click="post.showComment(onePost._id)">Commenter</a></li>
+              <li><a href="" ng-click="post.showComment(onePost._id)">Commentaires ({{onePost.comments.length}})</a></li>
             </ul>
           </div>
         </div>
 
         <!-- Commentaire form -->
 
-        <div class="col-12" ng-if="post.commentClicked">
+        <div class="col-12 comment-group" ng-if="post.commentClicked">
           <form>
-            <div class="form-group">
-              <input ng-model="onePost.postComment" type="text" class="form-control"  placeholder="Votre commentaire">
-              <a href="" class="btn btn-lg btn-primary btn-block" ng-click="post.updateComment(onePost._id, main.user._id, onePost.postComment)">Commenter</a>
+            <div class="form-group comment-action">
+              <input ng-model="onePost.postComment" type="text" class="form-control comment-form"  placeholder="Votre commentaire" required="">
+              <a href="" class="btn btn-danger comment-button" ng-click="post.updateComment(onePost._id, main.user._id, onePost.postComment)">Commenter</a>
             </div>
           </form>
           <div class="comment-list">
-            <p ng-repeat="comment in onePost.comments track by $index">{{ comment }}</p>
+            <ul class="list-group">
+              <li ng-repeat="comment in onePost.comments track by $index" class="list-group-item">{{ comment }}</li>
+            </ul>
           </div>
         </div>
 

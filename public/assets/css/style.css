@@ -110,7 +110,7 @@ body {
 }
 
 .post-actions {
-  width: 50%;
+  width: 80%;
 }
 
 .post-actions ul {
@@ -128,4 +128,27 @@ body {
 
 .comment-list {
   background-color: #fff;
+}
+
+.comment-group {
+
+}
+
+.comment-group {
+  background-color: #e1e1e1;
+  padding-bottom: 50px;
+}
+
+.comment-group a {
+  text-decoration: none;
+  color: #fff;
+}
+
+.comment-form {
+  margin: 20px auto;
+}
+
+.comment-action {
+  margin-top: 20px;
+  border-top: 1px solid #e1e1e1;
 }

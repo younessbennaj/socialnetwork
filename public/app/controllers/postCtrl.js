@@ -173,6 +173,7 @@ angular.module('postCtrl', ['postService', 'userService', 'authenticateService']
 
 
 
+
       };
 
       /*/Fonction updateComment()/*/
@@ -188,8 +189,9 @@ angular.module('postCtrl', ['postService', 'userService', 'authenticateService']
             //On va stocker notre commentaire dans le tableau des commentaires de notre post
             vm.postCommentData.comments.push(postComment);
 
-            //On clear le form de commentaire
-            vm.postComment = "";
+
+
+
 
             //On va mettre à jour notre poste coté serveur dans notre API grâce à la méthode http put et la fonction update de notre service
 
@@ -199,10 +201,11 @@ angular.module('postCtrl', ['postService', 'userService', 'authenticateService']
                 for(var i = 0; i < vm.posts.length; i++) {
                   if(vm.posts[i]._id == postId ) {
                     vm.posts[i].comments =  data.data.post.comments;
+                    vm.posts[i].postComment = "";
                   }
                 }
 
-                
+
 
               });
 
