@@ -4,7 +4,8 @@ angular.module('postCtrl', ['postService', 'userService', 'authenticateService']
 
   .controller('postController', function(Post, User, Authenticate) {
 
-    var vm = this;
+
+    var vm = this
 
     /*Pour des raisons pratiques nous allons séparer la logique de l'inscription de la logique gloable lié à l'utilisateur sinon dans
     la console on va nous renvoyer un message d'erreur 403*/
@@ -56,7 +57,11 @@ angular.module('postCtrl', ['postService', 'userService', 'authenticateService']
 
             // vm.message = data.data.message; //Permet d'informer notre utilisateur sur l'état de sa requête
           });
-      };
+      }; //Fin de la fonction savePost
+
+
+
+      /*/ Updatalike() /*/
 
 
       /*Cette fonction va permettre à nos utilisateur de pourvoir "liker" une publication.*/
@@ -156,38 +161,56 @@ angular.module('postCtrl', ['postService', 'userService', 'authenticateService']
            }
 
 
-
-
-
-
-
-
-
-
-
-            //Comme on a cliquer sur le like "ng-click" on va donc injecter dans le tableau l'id de l'utilisateur qui à cliquer
-            // vm.postLikeData.likes.push(userId);
-
-            /*On va ensuite répércuter ce changement dans la vue en incrémentant le nombre de like du post présent dans la tableau
-            de post qu'on à récupérer juste avant et binder dans la vue grâce à la directive ng-repeat. On va donc utiliser pour ça
-            la propriété length de notre tableau contenant tous les Id pour savoir le nombre d'utilisateur qui ont liker. On a changer
-            de méthode pour pouvoir empécher un utilisateur de liker plusieur fois le même post. */
-
-
-            // for(var i = 0; i < vm.posts.length; i++) {
-            //   if(vm.posts[i]._id == postId ) {
-            //     vm.posts[i].likes =  vm.postLikeData.likes;
-            //   }
-            // }
-
-            /*On va ensuite répércuter ce changement dans notre base de données pour que le changement puisse persister même si on raffraichit
-            la page (persistance coté serveur).*/
-
-
-
           }); //fin du get
 
-      }; //Fin de la fonction updateLike
+      }; //Fin de la fonction updateLike()
+
+      /*/Fonction showComment()/*/
+
+      vm.showComment = function() {
+
+        vm.commentClicked = !vm.commentClicked;
+
+
+
+      };
+
+      /*/Fonction updateComment()/*/
+
+      vm.updateComment = function(postId, userId, postComment) {
+
+        Post.get(postId)
+          .then(function(data) {
+
+            //On va stocker les données du post qu'on a récupéré
+            vm.postCommentData = data.data;
+
+            //On va stocker notre commentaire dans le tableau des commentaires de notre post
+            vm.postCommentData.comments.push(postComment);
+
+            //On clear le form de commentaire
+            vm.postComment = "";
+
+            //On va mettre à jour notre poste coté serveur dans notre API grâce à la méthode http put et la fonction update de notre service
+
+            Post.update(postId, vm.postCommentData)
+              .then(function(data) {
+
+                for(var i = 0; i < vm.posts.length; i++) {
+                  if(vm.posts[i]._id == postId ) {
+                    vm.posts[i].comments =  data.data.post.comments;
+                  }
+                }
+
+                
+
+              });
+
+          });
+
+
+
+      };
 
 
   });

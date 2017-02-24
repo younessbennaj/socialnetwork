@@ -16,7 +16,7 @@ var PostSchema   = new Schema({
   content: String,
   postDate: Date,
   likes: { type: [String], default: []},
-  comments: Number
+  comments: { type: [String], default: []}
 });
 
 //Le modèle va nous permettre d'insérer des données dans MongoDB en respectant le schéma précisé et de faire des requêtes dessus

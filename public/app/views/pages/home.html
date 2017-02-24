@@ -22,19 +22,40 @@
   <form>
   </br>
   <div class="row post" ng-repeat="onePost in post.posts | orderBy : 'postDate':true">
-    <div class="col-2">
-      <img src="http://placehold.it/70x70" class="rounded" alt="...">
-    </div>
-    <div class="col">
-      <h6> {{onePost.userFirstName}} {{onePost.userLastName}}</h6>
-      <br>
-      <p> {{onePost.content}}</p>
-      <div class="row post-actions">
-        <ul>
-          <li><a class="text-danger" href="" ng-click="post.updateLike(onePost._id, main.user._id)">Like {{onePost.likes.length}}</a></li>
-          <li><a href="">Commenter</a></li>
-        </ul>
-      </div>
-    </div>
+
+        <!-- Photo de profile -->
+
+        <div class="col-2">
+          <img src="http://placehold.it/70x70" class="rounded" alt="...">
+        </div>
+
+        <!-- Contenu et features -->
+
+        <div class="col-10">
+          <h6> {{onePost.userFirstName}} {{onePost.userLastName}}</h6>
+          <br>
+          <p> {{onePost.content}}</p>
+          <div class="row post-actions">
+            <ul>
+              <li><a class="text-danger" href="" ng-click="post.updateLike(onePost._id, main.user._id)">Like {{onePost.likes.length}}</a></li>
+              <li><a href="" ng-click="post.showComment(onePost._id)">Commenter</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Commentaire form -->
+
+        <div class="col-12" ng-if="post.commentClicked">
+          <form>
+            <div class="form-group">
+              <input ng-model="onePost.postComment" type="text" class="form-control"  placeholder="Votre commentaire">
+              <a href="" class="btn btn-lg btn-primary btn-block" ng-click="post.updateComment(onePost._id, main.user._id, onePost.postComment)">Commenter</a>
+            </div>
+          </form>
+          <div class="comment-list">
+            <p ng-repeat="comment in onePost.comments track by $index">{{ comment }}</p>
+          </div>
+        </div>
+
   </div>
 </div>
