@@ -13,6 +13,7 @@ var Schema = mongoose.Schema;
 var PostSchema   = new Schema({
   userFirstName: String,
   userLastName: String,
+  userId: String,
   content: String,
   postDate: Date,
   likes: { type: [String], default: []},

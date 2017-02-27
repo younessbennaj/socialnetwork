@@ -58,29 +58,46 @@
     </div>
   </div>
   <div class="container user-posts">
-  <div class="row post">
+  <div class="row post" ng-repeat="post in user.postUser">
     <div class="col-2">
       <img src="http://placehold.it/70x70" class="rounded" alt="...">
     </div>
     <div class="col">
-      <h6>{{user.user.firstName}} {{user.user.lastName}}</h6>
+      <h6>{{post.userFirstName}} {{post.userLastName}}</h6>
       <br>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin a auctor neque. Proin id quam vitae dolor ornare suscipit. In pulvinar luctus tincidunt.</p>
+      <p>{{post.content}}</p>
       <div class="row post-actions">
         <ul>
-          <li><a class="text-danger" href="">Liker</a></li>
-          <li><a href="">Commenter</a></li>
+          <li><a class="text-danger" href="">Liker {{post.likes.length}}</a></li>
+          <li><a href="" ng-click="user.showComment(post._id)">Commenter ({{post.comments.length}})</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="col-12 comment-group" ng-if="post.commentClicked">
+      <form>
+        <div class="form-group comment-action">
+          <input ng-model="onePost.postComment" type="text" class="form-control comment-form"  placeholder="Votre commentaire" required="">
+          <a href="" class="btn btn-danger comment-button" ng-click="post.updateComment(onePost._id, main.user, onePost.postComment)">Commenter</a>
+        </div>
+      </form>
+      <div class="comment-list">
+        <ul class="list-group">
+          <li ng-repeat="comment in onePost.comments track by $index" class="list-group-item">
+            <div class="row comment-profil">
+            <div class="col-2">
+              <img src="http://placehold.it/50x50">
+            </div>
+            <div class="col-10">
+              <h6></h6>
+              <br />
+              <p></p>
+            </div>
+          </div>
+          </li>
         </ul>
       </div>
     </div>
   </div>
 </div>
-<form>
-  <div class="form-group">
-    <label for="exampleInputEmail1"></label>
-    <input type="text" class="form-control" id="" aria-describedby="emailHelp" placeholder="Votre commentaire">
-    <small id="" class="form-text text-muted"></small>
-  </div>
-  </div>
-</form>
 </div>

@@ -290,6 +290,10 @@ module.exports = function(app, express) {
             user.password = req.body.password;
           }
 
+          if(req.body.friends) {
+            user.friends = req.body.friends;
+          }
+
           //On sauvegarde notre utilisateur dans notre base de donnée
 
           user.save(function(err) {
@@ -297,7 +301,7 @@ module.exports = function(app, express) {
               res.send(err);
             }
             else {
-              res.json( {message: 'Utilisateur mis à jour !'});
+              res.json( {message: 'Utilisateur mis à jour !', user: user});
             }
 
           })//user.save
@@ -333,6 +337,7 @@ module.exports = function(app, express) {
     //On va ensuite stocker les informations du post provenant de la requête
     post.userFirstName = req.body.userFirstName;
     post.userLastName = req.body.userLastName;
+    post.userId = req.body.userId;
     post.content = req.body.content;
     post.postDate = req.body.postDate;
     post.likes = [];

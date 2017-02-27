@@ -59,4 +59,6 @@ allons également utiliser pour cela le service $http de angular pour faire des 
 
 /*Authentification*/
 
-/*Nous allons donc créer un service authenticateService afin d'authentifier notre utilisateur.*/ 
+/*Nous allons donc créer un service authenticateService afin d'authentifier notre utilisateur.*/
+
+/*La particularité c'est que chaque post offre la possibilité de customisé son post (espace commentaire ou non, like ou non, etc).*/

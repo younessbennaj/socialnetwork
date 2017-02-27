@@ -38,6 +38,7 @@ angular.module('postCtrl', ['postService', 'userService', 'authenticateService']
         //On va associé le nom et le prénom de l'utilisateur au post de ce dernier
         vm.postData.userFirstName = vm.user.firstName;
         vm.postData.userLastName = vm.user.lastName;
+        vm.postData.userId = vm.user._id;
         vm.postData.postDate = new Date();
 
 
@@ -100,8 +101,6 @@ angular.module('postCtrl', ['postService', 'userService', 'authenticateService']
               Post.update(postId, vm.postLikeData)
               .then(function(data) {
 
-                console.log(data.data);
-
                 //En réponse le serveur va nous renvoyer le post mis à jour
 
                 //On va ensuite boucler notre tableau des posts pour mettre à jour notre post (likes) pour mettre à jour notre vue
@@ -143,8 +142,6 @@ angular.module('postCtrl', ['postService', 'userService', 'authenticateService']
                     //On fait appelle à la fonction update de notre service post pour mettre à jour le post
                     Post.update(postId, vm.postDislikeData)
                     .then(function(data) {
-
-                      console.log(data.data);
 
                       // En réponse le serveur va nous renvoyer le post mis à jour
 
@@ -197,17 +194,10 @@ angular.module('postCtrl', ['postService', 'userService', 'authenticateService']
 
             //On va stocker notre commentaire dans le tableau des commentaires de notre post
             vm.postCommentData.comments.push({comment: postComment, user: user});
-            console.log(vm.postCommentData.comments);
-
-
-
 
             //On va mettre à jour notre poste coté serveur dans notre API grâce à la méthode http put et la fonction update de notre service
-            console.log(vm.postCommentData);
             Post.update(postId, vm.postCommentData)
               .then(function(data) {
-
-                console.log(data);
 
                 for(var i = 0; i < vm.posts.length; i++) {
                   if(vm.posts[i]._id == postId ) {

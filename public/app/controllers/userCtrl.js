@@ -1,8 +1,8 @@
 //Nous allons lui injecter le module userService dans notre module userCtrl car nous allons avoir besoin de notre userFactory
 
-angular.module('userCtrl', ['userService'])
+angular.module('userCtrl', ['userService', 'postService'])
 
-  .controller('userController', function($routeParams, User) {
+  .controller('userController', function($routeParams, User, Post) {
 
     var vm = this;
 
@@ -23,6 +23,107 @@ angular.module('userCtrl', ['userService'])
         vm.user = data.data;
 
       });
+
+    Post.all()
+      .then(function(data) {
+
+        vm.postUser = [];
+
+        for(var i = 0; i < data.data.length; i++) {
+          if(data.data[i].userId == $routeParams.user_id) {
+            vm.postUser.push(data.data[i]);
+          }
+
+
+
+        }
+
+
+      })
+
+      //Permet d'afficher l'espace commentaire d'un post
+
+    vm.showComment = function(postId) {
+
+      //Nous permet de trouver le post correspondant aux commentaire qu'on veut afficher
+
+      for(var i = 0; i < vm.postUser.length; i++) {
+        if(vm.postUser[i]._id == postId ) {
+
+          //On passe la variable permettant de faire apparraitre les commentaires à true ou false en fonction des besoins
+          vm.postUser[i].commentClicked = !vm.postUser[i].commentClicked;
+        }
+      }
+
+    };
+
+    vm.addFriends = function(friend, userId) {
+
+      var isFriend;
+
+      //On va retrouver notre utilisateur et placer dans son tableau d'amis l'ID de l'utilisateur qu'il souhaite ajouter
+
+      for(var i = 0; i < vm.users.length ; i++) {
+
+          if(vm.users[i]._id == userId) {
+
+            //Va nous mettre de vérifier si cet utilisateur ne fait pas déjà parti de nos amis
+
+            for(var j = 0; j < vm.users[i].friends.length; j++) {
+
+              if(vm.users[i].friends[j].friend == friend._id) {
+
+                console.log('déjà amis');
+                isFriend = true;
+
+              }
+
+
+
+            };
+
+
+
+            if(!isFriend) {
+
+              //On va placer l'Id de notre nouvel ami dans notre tabeau amis
+
+              vm.users[i].friends.push({friend: friend._id, status: 'waiting'});
+              friend.friends.push({friend: userId, status: 'waiting'});
+
+
+
+
+
+              //On va mettre à jour notre utilisateur en lui passant le nouveau tableau des amis mis à jour
+
+
+              User.update(userId, vm.users[i])
+
+                .then(function(data) {
+
+              });
+
+              //On va également mettre à jour notre futur amis en lui passant le nouveau tableau contenant l'Id de notre utilisateur
+
+              User.update(friend._id, friend)
+
+                .then(function(data) {
+
+              });
+
+
+
+            }
+
+
+          }
+
+      }
+
+
+
+    };
 
 
   })
