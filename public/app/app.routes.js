@@ -45,9 +45,17 @@ angular.module('app.routes', ['ngRoute'])
         controllerAs: 'user'
       })
 
+      //La route pour la page pour la page de modification utilisateur
       .when('/edit/:user_id', {
         templateUrl: 'app/views/pages/users/edit.html',
         controller: 'userEditController',
+        controllerAs: 'user'
+      })
+
+      //La route pour afficher la liste d'amis d'un utilisateur
+      .when('/friends/:user_id', {
+        templateUrl: 'app/views/pages/users/friends.html',
+        controller: 'userFriendController',
         controllerAs: 'user'
       });
 

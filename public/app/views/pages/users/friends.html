@@ -1,0 +1,17 @@
+<div class="container users-list">
+  <form>
+    <div class="form-group search-friends">
+      <label for="searchFriends"></label>
+      <input type="text" class="form-control" id="searchFriends"  placeholder="Trouver un ami" ng-model="friendName">
+    </div>
+  </form>
+  <div class="card user-card" ng-repeat="person in user.friends | orderBy : 'firstName' | filter: {firstName: friendName}">
+    <h3 class="card-header">{{ person.firstName }} {{ person.lastName }}</h3>
+    <div class="card-block">
+      <h4 class="card-title">{{ person.userName }}</h4>
+      <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent scelerisque suscipit magna nec congue.</p>
+      <a ng-href="/users/{{ person._id }}" class="btn btn-primary"><span>Voir le profil</span></a>
+      <a ng-href="" class="btn btn-danger" ng-click="user.addFriends(person, main.user._id)"><span>Ajouter à mes amis</span></a>
+    </div>
+  </div>
+</div>

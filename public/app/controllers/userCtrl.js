@@ -94,7 +94,6 @@ angular.module('userCtrl', ['userService', 'postService'])
 
 
 
-
               //On va mettre à jour notre utilisateur en lui passant le nouveau tableau des amis mis à jour
 
 
@@ -151,4 +150,44 @@ angular.module('userCtrl', ['userService', 'postService'])
 
           });
       };
+  })
+
+  .controller('userFriendController', function($routeParams, User) {
+
+    var vm = this;
+    vm.friends = [];
+
+    User.all()
+      .then(function(data) {
+
+        vm.users = data.data;
+
+        User.get($routeParams.user_id)
+          .then(function(data) {
+            vm.user = data.data;
+
+
+            for(var i = 0; i < vm.user.friends.length; i++) {
+
+              for(var j = 0; j < vm.users.length; j++) {
+
+                if(vm.user.friends[i].friend == vm.users[j]._id) {
+
+                  vm.friends.push(vm.users[j]);
+                }
+
+              }
+
+            }
+
+            console.log(vm.friends);
+
+          })
+
+
+    });
+
+
+
+
   });
