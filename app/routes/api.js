@@ -227,6 +227,20 @@ module.exports = function(app, express) {
       });
     }) //fin de la méthode post
 
+    //On va supprimer un post dans notre base de donnée (Méthode DELETE sur l'URL http://localhost:8000/api/posts/:post_id )
+    .delete(function(req, res) {
+
+      //On utilise la méthode remove() de notre model avec comme condition l'Id de l'utilisateur que l'on récupère dans la requête
+      User.remove( function(err) {
+        if(err) {
+          return res.send(err);
+        }
+        else {
+          res.json({message: 'tous les utilisateurs supprimés avec succès'});
+        }
+      })
+    })//Fin de delete
+
     //On va recupérer tous les utilisateurs (Méthode GET sur l'URL http://localhost:8000/api/users )
     .get(function(req, res) {
 
@@ -238,7 +252,37 @@ module.exports = function(app, express) {
           res.json(users);
         }
       });
-    });
+    })
+
+    .put(function(req, res) {
+
+      User.find(function(err, users) {
+        if(err) {
+          res.send(err);
+        }
+        else {
+
+          for(var i = 0; i < users.length; i++) {
+            users[i].friends = [];
+            users[i].notifications = [];
+
+            users[i].save(function(err) {
+              if(err) {
+                res.send(err);
+              }
+              else {
+              }
+
+            })//user.save
+          }
+
+          res.send(users);
+
+        }
+
+      });
+
+    })//Fin du put
 
   apiRouter.route('/users/:user_id')
 
@@ -292,6 +336,10 @@ module.exports = function(app, express) {
 
           if(req.body.friends) {
             user.friends = req.body.friends;
+          }
+
+          if(req.body.notifications) {
+            user.notifications = req.body.notifications;
           }
 
           //On sauvegarde notre utilisateur dans notre base de donnée

@@ -33,7 +33,7 @@
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav ml-auto">
           <li ng-if="main.loggedIn" class="nav-item active">
-            <a class="nav-link" href="/users/{{ main.user._id }}">{{ main.user.firstName }} <span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="/{{ main.user._id }}">{{ main.user.firstName }} <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/">Acceuil</a>
@@ -42,7 +42,7 @@
             <a class="nav-link" href="/login">Connexion</a>
           </li>
           <li ng-if="main.loggedIn" class="nav-item">
-            <a class="nav-link" href="/users">Trouver des amis</i></a>
+            <a class="nav-link" href="/users/{{ main.user._id }}">Trouver des amis</i></a>
           </li>
           <li ng-if="main.loggedIn" class="nav-item">
             <a ng-click="main.doLogout()" class="nav-link" href="#">Déconnexion</a>

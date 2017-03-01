@@ -25,7 +25,7 @@ angular.module('app.routes', ['ngRoute'])
       })
 
       //La route pour lister tous nos utilisateurs
-      .when('/users', {
+      .when('/users/:user_id', {
         templateUrl: 'app/views/pages/users/all.html',
         controller: 'userController',
         controllerAs: 'user'
@@ -39,7 +39,7 @@ angular.module('app.routes', ['ngRoute'])
       })
 
       //La route pour la page d'un utilisateur unique
-      .when('/users/:user_id', {
+      .when('/:user_id', {
         templateUrl: 'app/views/pages/users/single.html',
         controller: 'userController',
         controllerAs: 'user'

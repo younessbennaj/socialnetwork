@@ -14,6 +14,54 @@ angular.module('userCtrl', ['userService', 'postService'])
 
         //On va stocké nos utilisateurs dans la variable vm.users
         vm.users = data.data;
+        // var userFriends = [];
+        //
+        // for(var i = 0; i < vm.users.length; i++) {
+        //
+        //   if(vm.users[i]._id == $routeParams.user_id) {
+        //
+        //
+        //     for(var j = 0; j < vm.users[i].friends.length; j++) {
+        //
+        //
+        //
+        //       for(var k = 0; k < vm.users.length; k++) {
+        //
+        //         if(vm.users[k]._id == vm.users[i].friends[j].friend) {
+        //
+        //           userFriends.push(vm.users[k]);
+        //
+        //
+        //         }
+        //
+        //       }
+        //
+        //     }
+        //
+        //     vm.users.splice(i, 1);
+        //
+        //     for(var l = 0; l < vm.users.length; l++) {
+        //
+        //       for(var m = 0; m < userFriends.length; m++) {
+        //
+        //         if(vm.users[l] == userFriends[m]) {
+        //
+        //           // vm.users[l];
+        //
+        //           vm.users.splice(l, 1);
+        //
+        //         }
+        //
+        //       };
+        //
+        //     };
+        //
+        //   }
+        //
+        // }
+        //
+        // console.log(vm.users);
+
 
       });
 
@@ -59,73 +107,91 @@ angular.module('userCtrl', ['userService', 'postService'])
 
     vm.addFriends = function(friend, userId) {
 
+      console.log('add');
+
       var isFriend;
 
-      //On va retrouver notre utilisateur et placer dans son tableau d'amis l'ID de l'utilisateur qu'il souhaite ajouter
+      User.all()
+        .then(function(data) {
 
-      for(var i = 0; i < vm.users.length ; i++) {
+          vm.users = data.data;
 
-          if(vm.users[i]._id == userId) {
+          //On va retrouver notre utilisateur et placer dans son tableau d'amis l'ID de l'utilisateur qu'il souhaite ajouter
 
-            //Va nous mettre de vérifier si cet utilisateur ne fait pas déjà parti de nos amis
+          for(var i = 0; i < vm.users.length ; i++) {
 
-            for(var j = 0; j < vm.users[i].friends.length; j++) {
+            if(vm.users[i]._id == userId) {
 
-              if(vm.users[i].friends[j].friend == friend._id) {
+              //Va nous mettre de vérifier si cet utilisateur ne fait pas déjà parti de nos amis
 
-                console.log('déjà amis');
-                isFriend = true;
+              for(var j = 0; j < vm.users[i].friends.length; j++) {
+
+                if(vm.users[i].friends[j].friend == friend._id) {
+
+                  console.log('déjà amis');
+                  isFriend = true;
+
+                }
+
+
+
+              };
+
+
+
+              if(!isFriend) {
+
+                //On va placer l'Id de notre nouvel ami dans notre tabeau amis
+
+                //On ajoute l'utilisateur dans la liste d'amis avec le status "waiting"
+                vm.users[i].friends.push({friend: friend._id, waiting: true});
+                //On ajoute l'utilisateur dans la liste d'amis avec le status "waiting"
+                friend.friends.push({friend: userId, waiting: true});
+
+                friend.notifications.push({type: 'friend'});
+
+                console.log(friend.notifications);
+
+
+
+
+                //On va mettre à jour notre utilisateur en lui passant le nouveau tableau des amis mis à jour
+
+
+                User.update(userId, vm.users[i])
+
+                .then(function(data) {
+
+                });
+
+                //On va également mettre à jour notre futur amis en lui passant le nouveau tableau contenant l'Id de notre utilisateur
+
+                User.update(friend._id, friend)
+
+                .then(function(data) {
+
+                  console.log(data.data);
+
+                });
+
+
 
               }
 
 
-
-            };
-
-
-
-            if(!isFriend) {
-
-              //On va placer l'Id de notre nouvel ami dans notre tabeau amis
-
-              vm.users[i].friends.push({friend: friend._id, status: 'waiting'});
-              friend.friends.push({friend: userId, status: 'waiting'});
-
-
-
-
-              //On va mettre à jour notre utilisateur en lui passant le nouveau tableau des amis mis à jour
-
-
-              User.update(userId, vm.users[i])
-
-                .then(function(data) {
-
-              });
-
-              //On va également mettre à jour notre futur amis en lui passant le nouveau tableau contenant l'Id de notre utilisateur
-
-              User.update(friend._id, friend)
-
-                .then(function(data) {
-
-              });
-
-
-
             }
-
 
           }
 
-      }
+        });
 
 
 
-    };
+
+    }; //Fin de addFriends
 
 
-  })
+  }) //Fin de userController
 
   .controller('userEditController', function($routeParams, User) {
 

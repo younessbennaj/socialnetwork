@@ -17,6 +17,7 @@ var UserSchema   = new Schema({
     lastName: String,
     userName:  {type: String, required: true, index: { unique: true }}, //Permet d'avoir qu'un seul userName et evite les doublons dans la BD
     friends: { type: [], default: []},
+    notifications: {type: [], default: []},
     password: { type: String, required: true, select: false } //Permet de ne pas envoyer le mot de passe lors de la methode get afin de maximiser la sécurité
 });
 //Notre schema va nous permettre ensuite de pouvoir créer un modèle
