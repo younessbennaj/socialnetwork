@@ -14,53 +14,6 @@ angular.module('userCtrl', ['userService', 'postService'])
 
         //On va stocké nos utilisateurs dans la variable vm.users
         vm.users = data.data;
-        // var userFriends = [];
-        //
-        // for(var i = 0; i < vm.users.length; i++) {
-        //
-        //   if(vm.users[i]._id == $routeParams.user_id) {
-        //
-        //
-        //     for(var j = 0; j < vm.users[i].friends.length; j++) {
-        //
-        //
-        //
-        //       for(var k = 0; k < vm.users.length; k++) {
-        //
-        //         if(vm.users[k]._id == vm.users[i].friends[j].friend) {
-        //
-        //           userFriends.push(vm.users[k]);
-        //
-        //
-        //         }
-        //
-        //       }
-        //
-        //     }
-        //
-        //     vm.users.splice(i, 1);
-        //
-        //     for(var l = 0; l < vm.users.length; l++) {
-        //
-        //       for(var m = 0; m < userFriends.length; m++) {
-        //
-        //         if(vm.users[l] == userFriends[m]) {
-        //
-        //           // vm.users[l];
-        //
-        //           vm.users.splice(l, 1);
-        //
-        //         }
-        //
-        //       };
-        //
-        //     };
-        //
-        //   }
-        //
-        // }
-        //
-        // console.log(vm.users);
 
 
       });
@@ -81,7 +34,6 @@ angular.module('userCtrl', ['userService', 'postService'])
           if(data.data[i].userId == $routeParams.user_id) {
             vm.postUser.push(data.data[i]);
           }
-
 
 
         }
@@ -216,44 +168,44 @@ angular.module('userCtrl', ['userService', 'postService'])
 
           });
       };
-  })
-
-  .controller('userFriendController', function($routeParams, User) {
-
-    var vm = this;
-    vm.friends = [];
-
-    User.all()
-      .then(function(data) {
-
-        vm.users = data.data;
-
-        User.get($routeParams.user_id)
-          .then(function(data) {
-            vm.user = data.data;
-
-
-            for(var i = 0; i < vm.user.friends.length; i++) {
-
-              for(var j = 0; j < vm.users.length; j++) {
-
-                if(vm.user.friends[i].friend == vm.users[j]._id) {
-
-                  vm.friends.push(vm.users[j]);
-                }
-
-              }
-
-            }
-
-            console.log(vm.friends);
-
-          })
-
-
-    });
-
-
-
-
   });
+
+  // .controller('userFriendController', function($routeParams, User) {
+  //
+  //   var vm = this;
+  //   vm.friends = [];
+  //
+  //   User.all()
+  //     .then(function(data) {
+  //
+  //       vm.users = data.data;
+  //
+  //       User.get($routeParams.user_id)
+  //         .then(function(data) {
+  //           vm.user = data.data;
+  //
+  //
+  //           for(var i = 0; i < vm.user.friends.length; i++) {
+  //
+  //             for(var j = 0; j < vm.users.length; j++) {
+  //
+  //               if(vm.user.friends[i].friend == vm.users[j]._id) {
+  //
+  //                 vm.friends.push(vm.users[j]);
+  //               }
+  //
+  //             }
+  //
+  //           }
+  //
+  //           console.log(vm.friends);
+  //
+  //         })
+  //
+  //
+  //   });
+  //
+  //
+  //
+  //
+  // });

@@ -6,6 +6,7 @@ angular.module("socialApp", [
   'userCtrl',
   'signupCtrl',
   'postCtrl',
+  'friendCtrl',
   'postService',
   'userService'
 ])

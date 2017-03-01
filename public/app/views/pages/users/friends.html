@@ -1,19 +1,56 @@
 <div class="container text-center friend-actions">
   <div class="btn-group" role="group" aria-label="Basic example">
-    <button type="button" class="btn btn-outline-primary"><a ng-href="/friends/{{ user.user._id }}">Mes amis</a></button>
-    <button type="button" class="btn btn-outline-primary">Invitations</button>
-    <button type="button" class="btn btn-outline-primary"><a ng-href="/users/{{ user.user._id }}">Trouver un ami</a></button>
+    <button type="button" class="btn btn-outline-primary"><a ng-click="friend.checkFriends()" href="">Mes amis</a></button>
+    <button type="button" class="btn btn-outline-primary"><a ng-click="friend.checkRequests()" href="">Invitations</a></button>
+    <button type="button" class="btn btn-outline-primary"><a ng-click="friend.findFriends()" href="">Trouver un ami</a></button>
   </div>
 </div>
 
-<div class="container users-list">
+<div class="container users-list" ng-if="friend.type == 'friends'">
+  <h2>Voir mes amis</h2>
   <form>
     <div class="form-group search-friends">
       <label for="searchFriends"></label>
       <input type="text" class="form-control" id="searchFriends"  placeholder="Trouver un ami" ng-model="friendName">
     </div>
   </form>
-  <div class="card user-card" ng-repeat="person in user.friends | orderBy : 'firstName' | filter: {firstName: friendName}">
+  <div class="card user-card" ng-repeat="person in friend.users | orderBy : 'firstName' | filter: {firstName: friendName}">
+    <h3 class="card-header">{{ person.firstName }} {{ person.lastName }}</h3>
+    <div class="card-block">
+      <h4 class="card-title">{{ person.userName }}</h4>
+      <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent scelerisque suscipit magna nec congue.</p>
+      <a ng-href="/users/{{ person._id }}" class="btn btn-primary"><span>Voir le profil</span></a>
+    </div>
+  </div>
+</div>
+
+<div class="container users-list" ng-if="friend.type == 'requests'">
+  <h2>Voir mes demandes</h2>
+  <form>
+    <div class="form-group search-friends">
+      <label for="searchFriends"></label>
+      <input type="text" class="form-control" id="searchFriends"  placeholder="Trouver un ami" ng-model="friendName">
+    </div>
+  </form>
+  <div class="card user-card" ng-repeat="person in friend.users| orderBy : 'firstName' | filter: {firstName: friendName}">
+    <h3 class="card-header">{{ person.firstName }} {{ person.lastName }}</h3>
+    <div class="card-block">
+      <h4 class="card-title">{{ person.userName }}</h4>
+      <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent scelerisque suscipit magna nec congue.</p>
+      <a ng-href="/users/{{ person._id }}" class="btn btn-primary"><span>Voir le profil</span></a>
+    </div>
+  </div>
+</div>
+
+<div class="container users-list" ng-if="friend.type == 'find'">
+  <h2>Chercher un ami</h2>
+  <form>
+    <div class="form-group search-friends">
+      <label for="searchFriends"></label>
+      <input type="text" class="form-control" id="searchFriends"  placeholder="Trouver un ami" ng-model="friendName">
+    </div>
+  </form>
+  <div class="card user-card" ng-repeat="person in friend.users | orderBy : 'firstName' | filter: {firstName: friendName}">
     <h3 class="card-header">{{ person.firstName }} {{ person.lastName }}</h3>
     <div class="card-block">
       <h4 class="card-title">{{ person.userName }}</h4>

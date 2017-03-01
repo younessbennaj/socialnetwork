@@ -1,4 +1,4 @@
-//User.js
+//Post.js
 
 //Ce fichier va nous permettre de définir notre modèle de post
 

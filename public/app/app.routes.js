@@ -27,8 +27,8 @@ angular.module('app.routes', ['ngRoute'])
       //La route pour lister tous nos utilisateurs
       .when('/users/:user_id', {
         templateUrl: 'app/views/pages/users/all.html',
-        controller: 'userController',
-        controllerAs: 'user'
+        controller: 'friendController',
+        controllerAs: 'friend'
       })
 
       // La route pour la page d'inscription
@@ -55,8 +55,8 @@ angular.module('app.routes', ['ngRoute'])
       //La route pour afficher la liste d'amis d'un utilisateur
       .when('/friends/:user_id', {
         templateUrl: 'app/views/pages/users/friends.html',
-        controller: 'userFriendController',
-        controllerAs: 'user'
+        controller: 'friendController',
+        controllerAs: 'friend'
       });
 
     //On peut ajouter une dernière règle (otherwise()) qui permet de définir la règle par défaut si aucune règle n'a matché
