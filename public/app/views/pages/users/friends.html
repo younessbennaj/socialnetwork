@@ -38,6 +38,7 @@
       <h4 class="card-title">{{ person.userName }}</h4>
       <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent scelerisque suscipit magna nec congue.</p>
       <a ng-href="/users/{{ person._id }}" class="btn btn-primary"><span>Voir le profil</span></a>
+      <a ng-href="" class="btn btn-danger" ng-click="friend.acceptRequest(person);"><span>Accepter l'invitation</span></a>
     </div>
   </div>
 </div>
@@ -56,6 +57,7 @@
       <h4 class="card-title">{{ person.userName }}</h4>
       <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent scelerisque suscipit magna nec congue.</p>
       <a ng-href="/users/{{ person._id }}" class="btn btn-primary"><span>Voir le profil</span></a>
+      <a ng-href="" class="btn btn-danger" ng-click="friend.addFriends(person);" ng-if="!person.isFriend"><span>Ajouter à mes amis</span></a>
     </div>
   </div>
 </div>
