@@ -93,7 +93,7 @@ angular.module('friendCtrl', ['userService'])
 
           for(var i = 0; i < data.data.friends.length; i++) {
 
-            if(data.data.friends[i].status !== 'confirmed') {
+            if(data.data.friends[i].status === 'request') {
 
               requestFriends.push(data.data.friends[i].friendId);
 
