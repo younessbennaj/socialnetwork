@@ -15,7 +15,8 @@ angular.module('friendCtrl', ['userService'])
     vm.checkFriends = (function() {
       //On change le type afin d'afficher la vue correspondante
       vm.type = 'friends';
-      var processing = true;
+
+
 
 
           User.get($routeParams.user_id)
@@ -32,7 +33,12 @@ angular.module('friendCtrl', ['userService'])
 
               for(var i = 0; i < data.data.friends.length; i++) {
 
-                friends.push(data.data.friends[i].friendId);
+                if(data.data.friends[i].status == 'confirmed') {
+
+                  friends.push(data.data.friends[i].friendId);
+
+                }
+
 
               };
 
@@ -45,7 +51,7 @@ angular.module('friendCtrl', ['userService'])
                   .then(function(data) {
                     users.push(data.data);
 
-                    vm.users = users;
+                    vm.friendsProfil = users;
 
                   });
 
@@ -69,15 +75,17 @@ angular.module('friendCtrl', ['userService'])
 
     vm.checkRequests = function() {
       //On change le type afin d'afficher la vue correspondante
+
       vm.type = 'requests';
+      vm.friendsRequet = [];
 
       User.get($routeParams.user_id)
         .then(function(data) {
 
           //Une fois nos amis ajouté il faut les faire apparaitre dans la vue avec le status (en attente de confirmation)
           //L'objectif est d'aller chercher dans le tableau "friends" de notre utilisateur les Id de nos amis
-          var friends = [];
-          var users = [];
+          var requestFriends = [];
+          var requestUsers = [];
 
 
 
@@ -85,24 +93,42 @@ angular.module('friendCtrl', ['userService'])
 
           for(var i = 0; i < data.data.friends.length; i++) {
 
-            friends.push(data.data.friends[i].friendId);
+            if(data.data.friends[i].status !== 'confirmed') {
+
+              requestFriends.push(data.data.friends[i].friendId);
+
+
+            }
+
 
           };
+
+          console.log(requestFriends);
+
+
+
 
           //On aller chercher nos amis dans notre API
           //On va le stocker dans notre tableau d'utilisateur
 
-          for(var i = 0; i < friends.length; i++) {
+          for(var i = 0; i < requestFriends.length; i++) {
 
-            User.get(friends[i])
+            User.get(requestFriends[i])
               .then(function(data) {
-                users.push(data.data);
 
-                vm.users = users;
+
+                requestUsers.push(data.data);
+
+                vm.friendsRequet = requestUsers;
+
+
 
               });
 
           };
+
+
+
 
 
 
@@ -132,57 +158,46 @@ angular.module('friendCtrl', ['userService'])
 
           var users = data.data;
 
-          //Cependant dans cette liste on ne doit pas afficher notre utilisateur
+          console.log(users);
 
+          //On veut ensuite afficher dans la vue seulement les utilisateurs qui ne sont pas déjà nos amis
           User.get($routeParams.user_id)
             .then(function(data) {
+              //On récupère notre utilisateur
+              var userFriends = data.data.friends;
 
-              /*/SUPPRIMER NOTRE UTILISATEUR/*/
+              for(var i = 0; i < userFriends.length; i++) {
 
-              //On va chercher la position de notre utilisateurs dans le tableau global des utilisateurs
-
-              var userPosition = users.map(function(user) {
-                  return user._id;
-              }).indexOf(data.data._id);
-
-              //On va supprimer notre utilisateurs de ce tableau qu'il ne soit pas binder dans la vue
-
-              users.splice(userPosition, 1);
-
-
-              /*/SUPPRIMER NOS AMIS/*/
-
-              //On va stocker nos amis dans un tableau friends
-              var friends = [];
-
-              for(var i = 0; i < data.data.friends.length; i++) {
-
-                friends.push(data.data.friends[i]);
-
-              };
-
-              //On veut maintenant supprimer du tableau users les utilisateurs qui correspondent à ces Id
-
-              for(var i = 0; i < friends.length; i++) {
-
+                //On va retrouver l'index de notre ami dans le tableau user
                 var friendPosition = users.map(function(friend) {
                   return friend._id;
-                }).indexOf(friends[i]);
+                }).indexOf(userFriends[i].friendId);
+
 
                 users.splice(friendPosition, 1);
 
-              };
+              }
 
+              //On supprime notre utilisateur
+
+              var userPosition = users.map(function(user) {
+                return user._id;
+              }).indexOf($routeParams.user_id);
+
+              users.splice(userPosition, 1);
+
+              console.log(users);
               vm.users = users;
 
-            //Ne pas faire apparaitre nos amis dans la vue
+
 
             })
 
 
 
-        });
-    };
+    });
+
+  };
 
     //Cette fonction est déclanché lorsque l'on clique sur "Ajouter à mes amis"
 
@@ -242,7 +257,9 @@ angular.module('friendCtrl', ['userService'])
 
           //On va stocké la liste des amis de notre utlisateur
 
-          var friends = data.data.friends;
+          var user = data.data
+
+          var friends = user.friends;
 
 
           //On va ensuite retrouné la position dans ce tableau de l'amis dont on souhaite accepter l'invitation
@@ -251,11 +268,43 @@ angular.module('friendCtrl', ['userService'])
             return friend.friendId;
           }).indexOf(friend._id);
 
+
+          //L'objectif est de changer l'objet représenant cet ami et plus particulièrement sa propriété status
+
+          friends[friendPosition].status = 'confirmed';
+
           console.log(friends[friendPosition]);
 
+          //On va ensuite mettre à jour notre utilisateur dans notre API
+
+          User.update($routeParams.user_id, user)
+            .then(function(data) {
+
+            });
+
+
+          //On va mettre à jour notre ami dans notre API pour que le changement soit permanant
+
+          //On va chercher dans le tableau de amis de notre ami notre utilisateur
+
+          var userPosition = friend.friends.map(function(user) {
+            return user.friendId;
+          }).indexOf($routeParams.user_id);
+
+          //On va changer la propriété status de l'objet qui représente notre utilisateur
+          friend.friends[userPosition].status = 'confirmed';
+
+          User.update(friend._id, friend)
+            .then(function(data) {
+
+              console.log(data.data.user);
+
+            });
+
+          friend.isFriend = true;
 
         });
 
-    }
+    } //Fin de acceptRequest();
 
   });
