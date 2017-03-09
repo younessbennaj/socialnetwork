@@ -42,9 +42,6 @@
             <a class="nav-link" href="/login">Connexion</a>
           </li>
           <li ng-if="main.loggedIn" class="nav-item">
-            <a class="nav-link" href="/users/{{ main.user._id }}">Trouver des amis</i></a>
-          </li>
-          <li ng-if="main.loggedIn" class="nav-item">
             <a ng-click="main.doLogout()" class="nav-link" href="#">Déconnexion</a>
           </li>
         </ul>

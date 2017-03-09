@@ -1,6 +1,7 @@
 <div class="container signup">
 
       <form class="form-signin" _lpchecked="1" ng-submit="user.saveUser()">
+        <div class="card-signin">
         <h2 class="form-signin-heading">S'inscrire</h2>
         <br>
         <label for="inputUsername" class="sr-only">Identifiant</label>
@@ -18,6 +19,7 @@
         <button class="btn btn-lg btn-primary btn-block" type="submit">S'inscrire</button>
         <div class="alert alert-info" ng-show="user.message">
           {{ user.message }}
+        </div>
         </div>
       </form>
 

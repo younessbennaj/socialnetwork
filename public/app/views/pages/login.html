@@ -41,6 +41,7 @@
 <div class="container signin">
 
       <form class="form-signin" _lpchecked="1" ng-submit="login.doLogin()">
+        <div class="card-signin">
         <h2 class="form-signin-heading">Se connecter</h2>
         <br>
         <label for="inputUsername" class="sr-only">Identifiant</label>
@@ -52,6 +53,7 @@
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
         <div class="alert alert-danger" ng-if="login.error">
           {{login.error}}
+        </div>
         </div>
       </form>
 

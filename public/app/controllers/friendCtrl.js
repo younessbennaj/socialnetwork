@@ -64,7 +64,7 @@ angular.module('friendCtrl', ['userService'])
 
             });
 
-    }); //Cette fonction s'appelle toute seule par défaut comme ça on affiche directement nos amis
+    }); 
 
 
 

@@ -1,6 +1,12 @@
 body {
   background-color: #eee;
+  color: #616161;
 }
+
+body h1 h2 h3 h4 h5 h6 {
+  color: #212121;
+}
+
 
 /*Main section - index.html*/
 
@@ -56,8 +62,28 @@ body {
 
 /*profil header */
 
-.profil-header {
-  height: 300px;
+/*profil-card*/
+
+.edit-btn {
+  font-size: 16px;
+}
+
+.profil-card {
+  background-color: #fff;
+  color: #616161;
+  padding: 20px;
+  margin: 50px 0px;
+  border: 1px solid #e1e1e1;
+  box-shadow: 2px 2px 2px #e1e1e1;
+  border-radius: 2px;
+}
+
+.profil-card a {
+  text-decoration: none;
+}
+
+.profil-card h3 {
+  margin-bottom: 30px;
 }
 
 .profil-header ul {
@@ -72,11 +98,10 @@ body {
 }
 
 .profil-header ul li a {
-  color: white;
+
 }
 
 .profil-header ul li a:hover {
-  color: white;
   text-decoration: none;
 }
 
@@ -84,10 +109,22 @@ body {
 
 .profil-stats {
   height: 80px;
+  margin-bottom: 20px auto;
+  margin-top: 50px;
+  padding: 0px !important;
+  border: 1px solid #e1e1e1;
+  box-shadow: 2px 2px 2px #e1e1e1;
+  border-radius: 2px;
 }
 
 .profil-stats h4 {
   margin-top: 12px;
+  font-size: 18px;
+}
+
+.profil-stats-items {
+  padding: 0px;
+  margin: 0 auto;
 }
 
 /*Post Form*/
@@ -101,12 +138,16 @@ body {
 .user-posts {
   margin-top: 50px;
   width: 750px;
-  background-color: #fff;
+
 }
 
 .post {
   padding-top: 20px;
-  border-bottom: 1px solid #e1e1e1;
+  border: 1px solid #e1e1e1;
+  box-shadow: 2px 2px 2px #e1e1e1;
+  border-radius: 2px;
+  background-color: #fff;
+  margin: 30px auto;
 }
 
 .post-actions {
@@ -130,13 +171,11 @@ body {
   background-color: #fff;
 }
 
-.comment-group {
 
-}
 
 .comment-group {
-  background-color: #e1e1e1;
-  padding-bottom: 50px;
+
+  padding-bottom: 20px;
 }
 
 .comment-group a {
@@ -150,7 +189,7 @@ body {
 
 .comment-action {
   margin-top: 20px;
-  border-top: 1px solid #e1e1e1;
+
 }
 
 .comment-profil {
@@ -160,4 +199,12 @@ body {
 .friend-actions {
 
   margin-top: 50px;
+}
+
+/*Edit*/
+
+.card-signin {
+  background-color: #fff;
+  padding: 30px 10px 70px 10px;
+  border-radius: 2px;
 }
