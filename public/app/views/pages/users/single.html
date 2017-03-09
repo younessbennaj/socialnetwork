@@ -8,22 +8,22 @@
     <div class="col profil-card">
       <div class="row ">
         <div class="col-3 text-center">
-          <img src="http://placehold.it/150x150" class="rounded" alt="...">
+          <img src="http://placehold.it/150x150" class="rounded-circle" alt="...">
         </div>
         <div class="col">
           <h3>{{user.user.firstName}} {{user.user.lastName}}   <span class="edit-btn"><a ng-href="/edit/{{ user.user._id }}"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</a></span> </h4>
 
           <p><i class="fa fa-map-marker" aria-hidden="true"></i> Paris</p>
           <p><i class="fa fa-envelope" aria-hidden="true"></i></i> exemple@gmail.com</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin a auctor neque. Proin id quam vitae dolor ornare suscipit. In pulvinar luctus tincidunt.</p>
-
-
-          <ul>
+          <!-- <ul class='text-center'>
             <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
             <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
             <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-          </ul>
+          </ul> -->
+          <div class="profil-description">
+            <p >Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin a auctor neque. Proin id quam vitae dolor ornare suscipit. In pulvinar luctus tincidunt.</p>
 
+          </div>
 
               <div class="row profil-stats align-items-center text-center">
                 <div class="col profil-stats-items">
@@ -36,7 +36,7 @@
                   <h4><a href=""><i class="fa fa-commenting" aria-hidden="true"></i> 12</a></h4>
                 </div>
                 <div class="col profil-stats-items">
-                  <h4><a ng-href="/friends/{{ user.user._id }}"><i class="fa fa-user" aria-hidden="true"></i> 45</a></h4>
+                  <h4><a ng-href="/friends/{{ user.user._id }}"><i class="fa fa-users" aria-hidden="true"></i> 45</a></h4>
                 </div>
               </div>
 
@@ -80,7 +80,7 @@
 
   <div class="row post" ng-repeat="post in user.postUser">
     <div class="col-2">
-      <img src="http://placehold.it/70x70" class="rounded" alt="...">
+      <img src="http://placehold.it/70x70" class="rounded-circle" alt="...">
     </div>
     <div class="col">
       <h6>{{post.userFirstName}} {{post.userLastName}}</h6>

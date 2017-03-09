@@ -29,10 +29,10 @@
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <a class="navbar-brand" href="/"><i class="fa fa-cube" aria-hidden="true"></i> Social Block</a>
+      <a class="navbar-brand" href="/"><i class="fa fa-cube" aria-hidden="true"></i> Social Card</a>
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav ml-auto">
-          <li ng-if="main.loggedIn" class="nav-item active">
+          <li ng-if="main.loggedIn" class="nav-item">
             <a class="nav-link" href="/{{ main.user._id }}">{{ main.user.firstName }} <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
@@ -47,22 +47,6 @@
         </ul>
       </div>
     </nav>
-
-    <!-- <nav class="navbar" ng-if="main.loggedIn">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <a class="navbar-brand" href="/"><span class="glyphicon glyphicon-send"></span> Social Network</a>
-        </div>
-          <ul class="nav navbar-nav navbar-right">
-          <li ng-if="main.loggedIn"><a href="/users/{{ main.user._id }}">{{ main.user.firstName }}</a></li>
-          <li class="active"><a href="#">Acceuil</a></li>
-          <li ng-if="!main.loggedIn"><a href="/login">Connexion</a></li>
-          <li ng-if="main.loggedIn"><a href="#" ng-click="main.doLogout()">Déconnexion</a></li>
-        </ul>
-
-      </div>
-    </nav> -->
-
 
     <main>
       <!-- VIEW -->

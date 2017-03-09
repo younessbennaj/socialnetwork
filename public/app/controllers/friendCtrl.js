@@ -4,8 +4,7 @@ angular.module('friendCtrl', ['userService'])
 
     var vm = this;
 
-    //On affiche par défaut la vue de la liste de nos amis
-    vm.type = 'friends';
+
 
     /*/CHECKFRIENDS: AFFICHER NOS AMIS/*/
 
@@ -64,7 +63,7 @@ angular.module('friendCtrl', ['userService'])
 
             });
 
-    }); 
+    });
 
 
 
