@@ -20,6 +20,7 @@
       <h4 class="card-title">{{ person.userName }}</h4>
       <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent scelerisque suscipit magna nec congue.</p>
       <a ng-href="/users/{{ person._id }}" class="btn btn-primary"><span>Voir le profil</span></a>
+      <a ng-href="" class="btn btn-danger" ng-click="friend.deleteFriends(person);" ng-if="!person.isNotFriend"><span>Supprimer</span></a>
     </div>
   </div>
 </div>

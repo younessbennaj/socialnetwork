@@ -24,6 +24,7 @@ angular.module('friendCtrl', ['userService'])
 
               //Une fois nos amis ajouté il faut les faire apparaitre dans la vue avec le status (en attente de confirmation)
               //L'objectif est d'aller chercher dans le tableau "friends" de notre utilisateur les Id de nos amis
+              vm.friendsProfil = [];
               var friends = [];
               var users = [];
 
@@ -52,11 +53,11 @@ angular.module('friendCtrl', ['userService'])
                     users.push(data.data);
 
                     vm.friendsProfil = users;
+                    console.log(vm.friendsProfil);
 
                   });
 
               };
-
 
 
 
@@ -102,8 +103,6 @@ angular.module('friendCtrl', ['userService'])
 
 
           };
-
-          console.log(requestFriends);
 
 
 
@@ -158,7 +157,7 @@ angular.module('friendCtrl', ['userService'])
 
           var users = data.data;
 
-          console.log(users);
+
 
           //On veut ensuite afficher dans la vue seulement les utilisateurs qui ne sont pas déjà nos amis
           User.get($routeParams.user_id)
@@ -186,7 +185,7 @@ angular.module('friendCtrl', ['userService'])
 
               users.splice(userPosition, 1);
 
-              console.log(users);
+
               vm.users = users;
 
 
@@ -273,8 +272,6 @@ angular.module('friendCtrl', ['userService'])
 
           friends[friendPosition].status = 'confirmed';
 
-          console.log(friends[friendPosition]);
-
           //On va ensuite mettre à jour notre utilisateur dans notre API
 
           User.update($routeParams.user_id, user)
@@ -297,7 +294,7 @@ angular.module('friendCtrl', ['userService'])
           User.update(friend._id, friend)
             .then(function(data) {
 
-              console.log(data.data.user);
+
 
             });
 
@@ -306,5 +303,42 @@ angular.module('friendCtrl', ['userService'])
         });
 
     } //Fin de acceptRequest();
+
+    vm.deleteFriends = function(friend) {
+
+      User.get($routeParams.user_id)
+        .then(function(data) {
+
+          var user = data.data;
+
+          var friendPosition = user.friends.map(function(friend) {
+            return friend.friendId;
+          }).indexOf(friend._id);
+
+          user.friends.splice(friendPosition, 1);
+
+          var userPosition = friend.friends.map(function(user) {
+            return user.friendId;
+          }).indexOf(user._id);
+
+          friend.friends.splice(userPosition, 1);
+
+          User.update(user._id, user)
+            .then(function(data) {
+
+
+              friend.isNotFriend = true;
+            });
+
+          User.update(friend._id, friend)
+            .then(function(data) {
+
+
+            })
+
+
+
+        });
+    }
 
   });
