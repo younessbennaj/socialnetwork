@@ -17,13 +17,60 @@ angular.module('postCtrl', ['postService', 'userService', 'authenticateService']
         vm.posts = [];
         var posts = data.data;
 
-        for(var i = 0; i < posts.length; i++) {
-          if(posts[i].type === 'public') {
-            vm.posts.push(posts[i]);
-          }
-        }
+        //On affiche seulement les posts avec le type 'public' sur la home
+        //On affiche seulement les posts de nos amis
 
-        console.log(vm.posts);
+        Authenticate.getUser()
+          .then(function(data) {
+
+
+            User.get(data.data._id)
+              .then(function(data) {
+
+
+
+                var friends = [];
+
+                for(var i = 0; i < data.data.friends.length; i++) {
+
+                  if(data.data.friends[i].status === 'confirmed') {
+                    friends.push(data.data.friends[i].friendId);
+                  }
+
+                }
+
+                //Pour les amis
+
+                for(var i = 0; i < posts.length; i++) {
+                  if(posts[i].type === 'public') {
+
+                    for(var j = 0; j < friends.length; j++) {
+
+                      if(friends[j] === posts[i].userId) {
+                        vm.posts.push(posts[i]);
+                      }
+
+                    }
+                  }
+                }
+
+                //Pour l'utilisateur
+
+                for(var i = 0; i < posts.length; i++) {
+                  if(posts[i].type === 'public' && posts[i].userId === data.data._id) {
+
+                    vm.posts.push(posts[i]);
+
+                  }
+                }
+
+
+
+              })
+          });
+
+
+
 
 
       });
