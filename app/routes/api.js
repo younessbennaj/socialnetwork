@@ -390,7 +390,7 @@ module.exports = function(app, express) {
     post.postDate = req.body.postDate;
     post.likes = [];
     post.comments = [];
-
+    post.type = req.body.type;
     //On va sauvegarder notre post et vérifier s'il y a des erreurs
     post.save(function(err) {
       if(err) {

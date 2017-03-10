@@ -14,8 +14,16 @@ angular.module('postCtrl', ['postService', 'userService', 'authenticateService']
       .then(function(data) {
 
         //On va stocké nos utilisateurs dans la variable vm.users
+        vm.posts = [];
+        var posts = data.data;
 
-        vm.posts = data.data;
+        for(var i = 0; i < posts.length; i++) {
+          if(posts[i].type === 'public') {
+            vm.posts.push(posts[i]);
+          }
+        }
+
+        console.log(vm.posts);
 
 
       });
@@ -32,13 +40,13 @@ angular.module('postCtrl', ['postService', 'userService', 'authenticateService']
       });
 
 
-
       vm.savePost = function() {
 
         //On va associé le nom et le prénom de l'utilisateur au post de ce dernier
         vm.postData.userFirstName = vm.user.firstName;
         vm.postData.userLastName = vm.user.lastName;
         vm.postData.userId = vm.user._id;
+        vm.postData.type = "public";
         vm.postData.postDate = new Date();
 
 
@@ -205,7 +213,6 @@ angular.module('postCtrl', ['postService', 'userService', 'authenticateService']
                     vm.posts[i].postComment = "";
                   }
                 }
-
 
 
               });

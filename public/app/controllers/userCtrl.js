@@ -1,8 +1,8 @@
 //Nous allons lui injecter le module userService dans notre module userCtrl car nous allons avoir besoin de notre userFactory
 
-angular.module('userCtrl', ['userService', 'postService'])
+angular.module('userCtrl', ['userService', 'postService', 'authenticateService'])
 
-  .controller('userController', function($routeParams, User, Post) {
+  .controller('userController', function($routeParams, User, Post, Authenticate) {
 
     var vm = this;
 
@@ -57,91 +57,78 @@ angular.module('userCtrl', ['userService', 'postService'])
 
     };
 
-    // vm.addFriends = function(friend, userId) {
-    //
-    //   console.log('add');
-    //
-    //   var isFriend;
-    //
-    //   User.all()
-    //     .then(function(data) {
-    //
-    //       vm.users = data.data;
-    //
-    //       //On va retrouver notre utilisateur et placer dans son tableau d'amis l'ID de l'utilisateur qu'il souhaite ajouter
-    //
-    //       for(var i = 0; i < vm.users.length ; i++) {
-    //
-    //         if(vm.users[i]._id == userId) {
-    //
-    //           //Va nous mettre de vérifier si cet utilisateur ne fait pas déjà parti de nos amis
-    //
-    //           for(var j = 0; j < vm.users[i].friends.length; j++) {
-    //
-    //             if(vm.users[i].friends[j].friend == friend._id) {
-    //
-    //               console.log('déjà amis');
-    //               isFriend = true;
-    //
-    //             }
-    //
-    //
-    //
-    //           };
-    //
-    //
-    //
-    //           if(!isFriend) {
-    //
-    //             //On va placer l'Id de notre nouvel ami dans notre tabeau amis
-    //
-    //             //On ajoute l'utilisateur dans la liste d'amis avec le status "waiting"
-    //             vm.users[i].friends.push({friend: friend._id, waiting: true});
-    //             //On ajoute l'utilisateur dans la liste d'amis avec le status "waiting"
-    //             friend.friends.push({friend: userId, waiting: true});
-    //
-    //             friend.notifications.push({type: 'friend'});
-    //
-    //             console.log(friend.notifications);
-    //
-    //
-    //
-    //
-    //             //On va mettre à jour notre utilisateur en lui passant le nouveau tableau des amis mis à jour
-    //
-    //
-    //             User.update(userId, vm.users[i])
-    //
-    //             .then(function(data) {
-    //
-    //             });
-    //
-    //             //On va également mettre à jour notre futur amis en lui passant le nouveau tableau contenant l'Id de notre utilisateur
-    //
-    //             User.update(friend._id, friend)
-    //
-    //             .then(function(data) {
-    //
-    //               console.log(data.data);
-    //
-    //             });
-    //
-    //
-    //
-    //           }
-    //
-    //
-    //         }
-    //
-    //       }
-    //
-    //     });
-    //
-    //
-    //
-    //
-    // }; //Fin de addFriends
+    vm.savePost = function(user) {
 
+
+      //On va associé le nom et le prénom de l'utilisateur au post de ce dernier
+      vm.postData.userFirstName = user.firstName;
+      vm.postData.userLastName = user.lastName;
+      vm.postData.userId = user._id;
+      vm.postData.type = "profil";
+      vm.postData.postDate = new Date();
+
+
+
+
+      //On va faire appelle à la fonction create() de notre service Post qui va nous permettre de créer un nouveau post
+      //Cette fonction va prendre en argument l'objet qui contient les différentes informations de notre post nécessaire à sa création
+
+      Post.create(vm.postData)
+        .then(function(data) {
+
+          //On va pusher nos données dans le tableau qui contient tout nos postes pour qu'Angular puisse binder ces données à la vue
+          vm.postUser.push(data.data.post);
+
+          //On va clearer le formulaire de création de posts
+          vm.postData = {};
+
+
+          // vm.message = data.data.message; //Permet d'informer notre utilisateur sur l'état de sa requête
+        });
+
+    }; //Fin de la fonction savePost
+
+    var isFriend = (function() {
+
+      User.get($routeParams.user_id)
+        .then(function(data) {
+
+          var friends = data.data.friends;
+
+          Authenticate.getUser()
+
+            .then(function(data) {
+
+               for(var i = 0; i < friends.length; i++) {
+                 if(friends[i].friendId === data.data._id)  {
+                   vm.isFriend = true;
+                 }
+
+               }
+
+
+
+            });
+        })
+    })();
+
+    var isMyProfil = (function() {
+
+
+          Authenticate.getUser()
+
+            .then(function(data) {
+
+               if($routeParams.user_id === data.data._id) {
+                 vm.isFriend = true;
+                 vm.itsMe = true;
+               }
+
+              console.log(data.data);
+
+            });
+
+  })();
 
   }) //Fin de userController
 
@@ -169,43 +156,3 @@ angular.module('userCtrl', ['userService', 'postService'])
           });
       };
   });
-
-  // .controller('userFriendController', function($routeParams, User) {
-  //
-  //   var vm = this;
-  //   vm.friends = [];
-  //
-  //   User.all()
-  //     .then(function(data) {
-  //
-  //       vm.users = data.data;
-  //
-  //       User.get($routeParams.user_id)
-  //         .then(function(data) {
-  //           vm.user = data.data;
-  //
-  //
-  //           for(var i = 0; i < vm.user.friends.length; i++) {
-  //
-  //             for(var j = 0; j < vm.users.length; j++) {
-  //
-  //               if(vm.user.friends[i].friend == vm.users[j]._id) {
-  //
-  //                 vm.friends.push(vm.users[j]);
-  //               }
-  //
-  //             }
-  //
-  //           }
-  //
-  //           console.log(vm.friends);
-  //
-  //         })
-  //
-  //
-  //   });
-  //
-  //
-  //
-  //
-  // });

@@ -15,15 +15,6 @@
       <input type="text" class="form-control" id="searchFriends"  placeholder="Trouver un ami" ng-model="friendName">
     </div>
   </form>
-  <!-- <div class="card user-card" ng-repeat="person in friend.friendsProfil | orderBy : 'firstName' | filter: {firstName: friendName}">
-    <h3 class="card-header">{{ person.firstName }} {{ person.lastName }}</h3>
-    <div class="card-block">
-      <h4 class="card-title">{{ person.userName }}</h4>
-      <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent scelerisque suscipit magna nec congue.</p>
-      <a ng-href="/users/{{ person._id }}" class="btn btn-primary"><span>Voir le profil</span></a>
-      <a ng-href="" class="btn btn-danger" ng-click="friend.deleteFriends(person);" ng-if="!person.isNotFriend"><span>Supprimer</span></a>
-    </div>
-  </div> -->
   <div class="user-card" ng-repeat="person in friend.friendsProfil | orderBy : 'firstName' | filter: {firstName: friendName}">
     <h4>{{ person.firstName }} {{ person.lastName }}  </h4>
 
@@ -34,7 +25,7 @@
 
     </div>
 
-    <a ng-href="/users/{{ person._id }}" class="btn btn-primary"><span>Voir le profil</span></a>
+    <a ng-href="/{{ person._id }}" class="btn btn-primary"><span>Voir le profil</span></a>
     <a ng-href="" class="btn btn-danger" ng-click="friend.deleteFriends(person);" ng-if="!person.isNotFriend"><span>Supprimer</span></a>
 
   </div>
@@ -48,15 +39,6 @@
       <input type="text" class="form-control" id="searchFriends"  placeholder="Trouver un ami" ng-model="friendName">
     </div>
   </form>
-  <!-- <div class="card user-card" ng-repeat="person in friend.friendsRequet| orderBy : 'firstName' | filter: {firstName: friendName}">
-    <h3 class="card-header">{{ person.firstName }} {{ person.lastName }}</h3>
-    <div class="card-block">
-      <h4 class="card-title">{{ person.userName }}</h4>
-      <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent scelerisque suscipit magna nec congue.</p>
-      <a ng-href="/users/{{ person._id }}" class="btn btn-primary"><span>Voir le profil</span></a>
-      <a ng-href="" class="btn btn-danger" ng-click="friend.acceptRequest(person);" ng-if="!person.isFriend"><span>Accepter l'invitation</span></a>
-    </div>
-  </div> -->
   <div class="user-card" ng-repeat="person in friend.friendsRequet| orderBy : 'firstName' | filter: {firstName: friendName}">
     <h4>{{ person.firstName }} {{ person.lastName }}  </h4>
 
@@ -67,7 +49,7 @@
 
     </div>
 
-    <a ng-href="/users/{{ person._id }}" class="btn btn-primary"><span>Voir le profil</span></a>
+    <a ng-href="/{{ person._id }}" class="btn btn-primary"><span>Voir le profil</span></a>
     <a ng-href="" class="btn btn-danger" ng-click="friend.acceptRequest(person);" ng-if="!person.isFriend"><span>Accepter l'invitation</span></a>
 
   </div>
@@ -81,15 +63,7 @@
       <input type="text" class="form-control" id="searchFriends"  placeholder="Trouver un ami" ng-model="friendName">
     </div>
   </form>
-  <!-- <div class="card user-card" ng-repeat="person in friend.users | orderBy : 'firstName' | filter: {firstName: friendName}">
-    <h3 class="card-header">{{ person.firstName }} {{ person.lastName }}</h3>
-    <div class="card-block">
-      <h4 class="card-title">{{ person.userName }}</h4>
-      <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent scelerisque suscipit magna nec congue.</p>
-      <a ng-href="/users/{{ person._id }}" class="btn btn-primary"><span>Voir le profil</span></a>
-      <a ng-href="" class="btn btn-danger" ng-click="friend.addFriends(person);" ng-if="!person.isFriend"><span>Ajouter à mes amis</span></a>
-    </div>
-  </div> -->
+  
   <div class="user-card" ng-repeat="person in friend.users | orderBy : 'firstName' | filter: {firstName: friendName}">
     <h4>{{ person.firstName }} {{ person.lastName }}  </h4>
 
@@ -100,7 +74,7 @@
 
     </div>
 
-    <a ng-href="/users/{{ person._id }}" class="btn btn-primary"><span>Voir le profil</span></a>
+    <a ng-href="/{{ person._id }}" class="btn btn-primary"><span>Voir le profil</span></a>
     <a ng-href="" class="btn btn-danger" ng-click="friend.addFriends(person);" ng-if="!person.isFriend"><span>Ajouter à mes amis</span></a>
 
   </div>

@@ -16,6 +16,7 @@ var PostSchema   = new Schema({
   userId: String,
   content: String,
   postDate: Date,
+  type: String,
   likes: { type: [String], default: []},
   comments: { type: [], default: []}
 });
