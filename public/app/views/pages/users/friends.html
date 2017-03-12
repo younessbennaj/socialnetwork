@@ -51,6 +51,7 @@
 
     <a ng-href="/{{ person._id }}" class="btn btn-primary"><span>Voir le profil</span></a>
     <a ng-href="" class="btn btn-danger" ng-click="friend.acceptRequest(person);" ng-if="!person.isFriend"><span>Accepter l'invitation</span></a>
+    <a ng-href="" class="btn btn-danger" ng-click="friend.ignoreRequest()"><span>Ignorer l'invitation</span></a>
 
   </div>
 </div>
@@ -63,7 +64,7 @@
       <input type="text" class="form-control" id="searchFriends"  placeholder="Trouver un ami" ng-model="friendName">
     </div>
   </form>
-  
+
   <div class="user-card" ng-repeat="person in friend.users | orderBy : 'firstName' | filter: {firstName: friendName}">
     <h4>{{ person.firstName }} {{ person.lastName }}  </h4>
 
